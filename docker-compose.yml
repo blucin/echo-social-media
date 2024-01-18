@@ -1,0 +1,20 @@
+services:
+  nextjs:
+    build:
+      context: /home/akshar/laptop_work/mini_project/mini-project/
+      target: dev
+      dockerfile: /home/akshar/laptop_work/mini_project/mini-project/Dockerfile
+    container_name: mini-project-nextjs
+    ports:
+      - '3000:3000'
+    env_file:
+      - .env
+    volumes:
+      - /home/akshar/laptop_work/mini_project/mini-project/:/usr/src/app/
+      - /home/akshar/laptop_work/mini_project/mini-project/node_modules:/usr/src/app/node_modules
+    restart: always
+
+# Define a network, which allows containers to communicate
+# with each other, by using their container name as a hostname
+#networks:
+#  frontend_network:
