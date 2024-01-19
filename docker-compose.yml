@@ -4,7 +4,6 @@ services:
       context: ./
       target: dev
       dockerfile: ./Dockerfile
-    container_name: mini-project-nextjs
     ports:
       - '3000:3000'
     env_file:
