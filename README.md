@@ -2,8 +2,7 @@
 
 Echo is a social media application developed as part of a mini project for the 6th semester. The project is built using Next.js, Tailwind CSS, and Shadcn UI.
 
-> **⚠️ WIP Project: You might want to check the `dev` branch for the latest changes.**
- **Link to development branch: 👉 [click me](https://github.com/blucin/echo-social-media/tree/dev) 👈**
+> **✅ WIP Project: You are viewing the latest changes of the `dev` branch**
 
 Other irrelevant details which are concerned with the project are mentioned below.
 
