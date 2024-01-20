@@ -20,7 +20,18 @@ Name:- Patel Akshar
 git clone git@github.com:blucin/echo-social-media.git
 ```
 
-2. Populate `.env` in the project root (not in the `src` folder) with the values from `.env.example`. ⚠️ Docker compose won't work without this step.
+2. Populate `.env` in the project root (not in the `src` folder) with the values from `.env.example`.
+
+```.env
+NEXTAUTH_URL=<YOUR_NEXTAUTH_URL> # or http://localhost:3000
+NEXTAUTH_SECRET=<YOUR_NEXTAUTH_SECRET> # a random string
+# You can generate the secret with: openssl rand -base64 32
+
+# Oauth Providers: https://next-auth.js.org/providers/google
+GOOGLE_CLIENT_ID=<YOUR_GOOGLE_CLIENT_ID>
+GOOGLE_CLIENT_SECRET=<YOUR_GOOGLE_CLIENT_SECRET>
+```
+> ⚠️ Docker compose won't work without this step.
 
 3. Install NPM packages
 ```bash
