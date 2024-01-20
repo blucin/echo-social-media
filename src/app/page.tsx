@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 
 export default function Home() {
   return (
@@ -6,5 +6,5 @@ export default function Home() {
       <h1>Shadcn UI Test</h1>
       <Button>Click Me</Button>
     </main>
-  )
+  );
 }
