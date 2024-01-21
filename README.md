@@ -23,13 +23,20 @@ git clone git@github.com:blucin/echo-social-media.git
 2. Populate `.env` in the project root (not in the `src` folder) with the values from `.env.example`.
 
 ```.env
-NEXTAUTH_URL=<YOUR_NEXTAUTH_URL> # or http://localhost:3000
-NEXTAUTH_SECRET=<YOUR_NEXTAUTH_SECRET> # a random string
-# You can generate the secret with: openssl rand -base64 32
+# Replace KEY=<VALUE> with your own values, without any quotes
+# ⚠️ Wrapping the value in quotes will cause errors
 
-# Oauth Providers: https://next-auth.js.org/providers/google
-GOOGLE_CLIENT_ID=<YOUR_GOOGLE_CLIENT_ID>
-GOOGLE_CLIENT_SECRET=<YOUR_GOOGLE_CLIENT_SECRET>
+NEXTAUTH_URL=<YOUR_NEXTAUTH_URL> # or http://localhost:3000
+NEXTAUTH_SECRET=<YOUR_NEXTAUTH_SECRET> # a random string > $ openssl rand -base64 32
+
+AUTH_SECRET=<YOUR_AUTH_SECRET> # a random string like above > $ openssl rand -hex 32
+AUTH_GOOGLE_ID=<YOUR_GOOGLE_CLIENT_ID> # Google Oauth Provider: https://next-auth.js.org/providers/google/
+AUTH_GOOGLE_SECRET=<YOUR_GOOGLE_CLIENT_SECRET>
+
+# postgresql database (here: supabase)
+# ⚠️ Don't include special characters in the password like @
+# read more about warning2: https://github.com/orgs/supabase/discussions/4161
+DATABASE_URL=postgresql://postgres:<YOUR_SUPABASE_KEY>@<YOUR_SUPABASE_URL>:5432/<YOUR_SUPABASE_DB>
 ```
 > ⚠️ Docker compose won't work without this step.
 
