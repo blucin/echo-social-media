@@ -1,5 +1,5 @@
 import { pgTable, foreignKey, pgEnum, text, timestamp, unique, primaryKey, integer } from "drizzle-orm/pg-core"
-  import { sql } from "drizzle-orm"
+import { sql } from "drizzle-orm"
 
 export const keyStatus = pgEnum("key_status", ['expired', 'invalid', 'valid', 'default'])
 export const keyType = pgEnum("key_type", ['stream_xchacha20', 'secretstream', 'secretbox', 'kdf', 'generichash', 'shorthash', 'auth', 'hmacsha256', 'hmacsha512', 'aead-det', 'aead-ietf'])
@@ -28,6 +28,44 @@ export const user = pgTable("user", {
 (table) => {
 	return {
 		userUsernameUnique: unique("user_username_unique").on(table.username),
+	}
+});
+
+export const comment = pgTable("comment", {
+	id: text("id").primaryKey().notNull(),
+	content: text("content").notNull(),
+	userId: text("userId").notNull().references(() => user.id, { onDelete: "cascade" } ),
+	postId: text("postId").notNull().references(() => post.id, { onDelete: "cascade" } ),
+	createdAt: timestamp("createdAt", { mode: 'string' }).defaultNow().notNull(),
+	updatedAt: timestamp("updatedAt", { mode: 'string' }).defaultNow(),
+});
+
+export const post = pgTable("post", {
+	id: text("id").primaryKey().notNull(),
+	title: text("title").notNull(),
+	content: text("content").notNull(),
+	userId: text("userId").notNull().references(() => user.id, { onDelete: "cascade" } ),
+	createdAt: timestamp("createdAt", { mode: 'string' }).defaultNow().notNull(),
+	updatedAt: timestamp("updatedAt", { mode: 'string' }).defaultNow(),
+});
+
+export const follower = pgTable("follower", {
+	followerId: text("followerId").notNull().references(() => user.id, { onDelete: "cascade" } ),
+	followeeId: text("followeeId").notNull().references(() => user.id, { onDelete: "cascade" } ),
+},
+(table) => {
+	return {
+		followerFollowerIdFolloweeIdPk: primaryKey({ columns: [table.followerId, table.followeeId], name: "follower_followerId_followeeId_pk"})
+	}
+});
+
+export const like = pgTable("like", {
+	userId: text("userId").notNull().references(() => user.id, { onDelete: "cascade" } ),
+	postId: text("postId").notNull().references(() => post.id, { onDelete: "cascade" } ),
+},
+(table) => {
+	return {
+		likeUserIdPostIdPk: primaryKey({ columns: [table.userId, table.postId], name: "like_userId_postId_pk"})
 	}
 });
 
