@@ -14,6 +14,9 @@ export const users = pgTable("user", {
   email: text("email").notNull(),
   emailVerified: timestamp("emailVerified", { mode: "date" }),
   image: text("image"),
+  username: text("username").unique(),
+  bio: text("bio"),
+  bannerImage: text("bannerImage"),
 });
 
 export const accounts = pgTable(
