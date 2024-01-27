@@ -4,6 +4,7 @@ const siteConfig = {
   siteUrl: process.env.SITE_URL || 'http://localhost:3000/',
   siteGithubUrl: 'https://github.com/blucin/echo-social-media/',
   author: {
+    shortName: 'Akshar',
     name: 'Akshar Patel',
     github: 'https://github.com/blucin/',
   },
