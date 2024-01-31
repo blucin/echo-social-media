@@ -33,10 +33,15 @@ AUTH_SECRET=<YOUR_AUTH_SECRET> # a random string like above > $ openssl rand -he
 AUTH_GOOGLE_ID=<YOUR_GOOGLE_CLIENT_ID> # Google Oauth Provider: https://next-auth.js.org/providers/google/
 AUTH_GOOGLE_SECRET=<YOUR_GOOGLE_CLIENT_SECRET>
 
-# postgresql database (here: supabase)
+# postgresql database (here: vercaldb)
 # ⚠️ Don't include special characters in the password like @
-# read more about warning2: https://github.com/orgs/supabase/discussions/4161
-DATABASE_URL=postgresql://postgres:<YOUR_SUPABASE_KEY>@<YOUR_SUPABASE_URL>:5432/<YOUR_SUPABASE_DB>
+# read more: https://github.com/orgs/supabase/discussions/4161
+POSTGRES_HOST=<YOUR_POSTGRES_HOST> # localhost if you run it locally
+POSTGRES_DATABASE=<YOUR_POSTGRES_DATABASE_NAME> # e.g. postgres
+POSTGRES_URL=<YOUR_POSTGRES_URL> # e.g. postgres://postgres:postgres@localhost/
+POSTGRES_USER=<YOUR_POSTGRES_USER>
+POSTGRES_PASSWORD=<YOUR_POSTGRES_PASSWORD>
+POSTGRES_PORT=<YOUR_POSTGRES_PORT> # optional, default: 5432
 ```
 > ⚠️ Docker compose won't work without this step.
 
