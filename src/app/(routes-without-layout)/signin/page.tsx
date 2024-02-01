@@ -34,21 +34,6 @@ export default function SignIn() {
 
         {/* right */}
         <div className="flex flex-col gap-3 h-full justify-center items-center">
-          <div className="flex flex-col gap-5 pb-5">
-            <div>
-              <p className="text-muted-foreground pb-1">Enter your username: </p>
-              <Input />
-            </div>
-            <div>
-              <p className="text-muted-foreground pb-1">Enter your bio: </p>
-              <Input />
-            </div>
-            <div>
-              <p className="text-muted-foreground pb-1">Enter your thumbnail image: </p>
-              <Input />
-            </div>
-          </div>
-          
           <Button className="p-5 flex gap-2 items-center font-medium">
             <Image
               src="/google.svg"
