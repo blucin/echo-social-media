@@ -1,7 +1,6 @@
 import { WavesIcon } from "lucide-react";
-import Image from "next/image";
 import ThemeToggler from "@/components/ThemeToggeler";
-import { Button } from "@/components/ui/button";
+import { SignInBtn } from "@/components/LoginBtns";
 
 export default function SignIn() {
   return (
@@ -33,22 +32,12 @@ export default function SignIn() {
 
         {/* right */}
         <div className="flex flex-col gap-3 h-full justify-center items-center">
-          <Button className="p-5 flex gap-2 items-center font-medium">
-            <Image
-              src="/google.svg"
-              alt="Google Logo"
-              className="dark:invert"
-              width={17}
-              height={17}
-              priority
-            />
-            Sign in with Google
-          </Button>
+          <SignInBtn />
           <div className="text-center text-muted-foreground px-10">
             By signing in, you agree to share your
             <br />
             email address, name and profile picture with Echo.
-          </div>
+          S</div>
         </div>
       </div>
     </main>
