@@ -33,7 +33,7 @@ export function SignOutBtn() {
         await signOut();
       }}
     >
-      <Button>Sign out</Button>
+      <Button>Sign Out</Button>
     </form>
   );
 }
