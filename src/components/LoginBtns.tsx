@@ -1,5 +1,6 @@
 import { signIn, signOut } from "@/auth";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 export function SignInBtn() {
   return (
@@ -9,7 +10,17 @@ export function SignInBtn() {
         await signIn("google");
       }}
     >
-      <Button>Sign In With Google</Button>
+      <Button className="p-5 flex gap-2 items-center font-medium">
+        <Image
+          src="/google.svg"
+          alt="Google Logo"
+          className="dark:invert"
+          width={17}
+          height={17}
+          priority
+        />
+        Sign In With Google
+      </Button>
     </form>
   );
 }
