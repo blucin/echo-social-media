@@ -24,7 +24,7 @@ export default function ThemeToggler({ ...props }: ThemeToggelerProps) {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
-          className={cn("h-12 w-12", props.className)}
+          className={cn("h-10 w-10", props.className)}
           variant="ghost"
           size="icon"
         >
