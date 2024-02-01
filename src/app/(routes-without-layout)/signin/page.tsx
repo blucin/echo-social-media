@@ -37,7 +37,7 @@ export default function SignIn() {
             By signing in, you agree to share your
             <br />
             email address, name and profile picture with Echo.
-          S</div>
+          </div>
         </div>
       </div>
     </main>
