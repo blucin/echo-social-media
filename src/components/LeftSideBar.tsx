@@ -1,7 +1,9 @@
 import type { LucideIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { FeatherIcon } from "lucide-react";
+import { signOut, auth } from "@/auth";
+import { LogInIcon, LogOutIcon } from "lucide-react";
+import Link from "next/link";
 
 type NavItem = {
   name: string;
@@ -14,10 +16,11 @@ type NavProps = {
   className?: string;
 };
 
-export default function LeftSideBar({ navItems, className }: NavProps) {
+export default async function LeftSideBar({ navItems, className }: NavProps) {
+  const session = await auth();
   return (
     <header className={cn("flex w-auto xl:col-span-2", className)}>
-    {/* 
+      {/* 
         Replace this if you want a custom nav bar for mobile devices
         <header className={cn("hidden sm:flex w-auto xl:col-span-2", className)}>
     */}
@@ -36,10 +39,31 @@ export default function LeftSideBar({ navItems, className }: NavProps) {
             </Button>
           ))}
         </div>
-        <Button className="py-7 xl:py-5 rounded-md text-base font-semibold flex items-center xl:mt-5">
-          <FeatherIcon className="xl:hidden" />
-          <span className="hidden xl:inline-flex flex-none">Tweet</span>
-        </Button>
+        {session ? (
+          <form
+            className="w-full xl:mt-5"
+            action={async () => {
+              "use server";
+              await signOut();
+            }}
+          >
+            <Button className="w-full py-7 xl:py-5">
+              <LogOutIcon className="xl:hidden" />
+              <span className="hidden xl:block text-base font-semibold">
+                Sign Out
+              </span>
+            </Button>
+          </form>
+        ) : (
+          <Link href="/signin">
+            <Button className="w-full py-7 xl:py-5 xl:mt-5">
+              <LogInIcon className="xl:hidden" />
+              <span className="hidden xl:block text-base font-semibold ">
+                Sign In
+              </span>
+            </Button>
+          </Link>
+        )}
       </div>
     </header>
   );
