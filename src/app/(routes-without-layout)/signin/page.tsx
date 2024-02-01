@@ -14,10 +14,10 @@ export default function SignIn() {
         </div>
 
         {/* top left */}
-        <p className="absolute flex gap-2 items-center top-8 left-8 pb-10 md:hidden">
+        <div className="absolute flex gap-2 items-center top-8 left-8 pb-10 md:hidden">
           <WavesIcon />
           <h1 className="text-2xl font-bold">Echo</h1>
-        </p>
+        </div>
 
         {/* left */}
         <div className="hidden md:block border-r h-full p-10 bg-accent">
@@ -45,11 +45,11 @@ export default function SignIn() {
             />
             Sign in with Google
           </Button>
-          <p className="text-center text-muted-foreground px-10">
+          <div className="text-center text-muted-foreground px-10">
             By signing in, you agree to share your
             <br />
             email address, name and profile picture with Echo.
-          </p>
+          </div>
         </div>
       </div>
     </main>
