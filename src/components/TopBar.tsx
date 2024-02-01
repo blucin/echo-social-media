@@ -9,7 +9,7 @@ export default function TopBar() {
           <p className="font-semibold h-12 flex items-center justify-center">Public</p>
           <p className="border-l h-12 flex items-center justify-center">Following</p>
         </div>
-        <ThemeToggler/>
+        <ThemeToggler className="border-l h-12 w-12"/>
       </div>
     </nav>
   );
