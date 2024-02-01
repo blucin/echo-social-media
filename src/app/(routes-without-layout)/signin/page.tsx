@@ -4,7 +4,7 @@ import ThemeToggler from "@/components/ThemeToggeler";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
-export default function SingIn() {
+export default function SignIn() {
   return (
     <main>
       <div className="block md:grid grid-cols-2 h-screen">
