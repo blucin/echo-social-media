@@ -1,7 +1,6 @@
 import { WavesIcon } from "lucide-react";
 import Image from "next/image";
 import ThemeToggler from "@/components/ThemeToggeler";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 export default function SignIn() {
