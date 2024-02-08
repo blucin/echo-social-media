@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
-import { ProfileFormSchema as formSchema } from "@/formSchemas";
+import { ProfileFormSchema as formSchema } from "@/form-schemas";
 
 export default function ProfileForm() {
   const form = useForm<z.infer<typeof formSchema>>({
