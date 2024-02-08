@@ -102,7 +102,7 @@ export default function ProfileForm() {
           name="username"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Username</FormLabel>
+              <FormLabel>Username*</FormLabel>
               <FormControl>
                 <Input
                   className="w-full md:w-96"
