@@ -6,6 +6,8 @@ import "./globals.css";
 
 import { cn } from "../lib/utils";
 
+import { EdgeStoreProvider } from "../lib/edgestore";
+
 const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",
@@ -22,13 +24,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-      <html lang="en">
-        <body
-          className={cn(
-            "min-h-screen bg-background font-sans antialiased",
-            fontSans.variable
-          )}
-        >
+    <html lang="en">
+      <body
+        className={cn(
+          "min-h-screen bg-background font-sans antialiased",
+          fontSans.variable
+        )}
+      >
+        <EdgeStoreProvider>
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
@@ -38,7 +41,8 @@ export default function RootLayout({
             {children}
             <Footer />
           </ThemeProvider>
-        </body>
-      </html>
+        </EdgeStoreProvider>
+      </body>
+    </html>
   );
 }
