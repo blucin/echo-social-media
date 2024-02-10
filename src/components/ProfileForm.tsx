@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Loader2 } from "lucide-react";
-import { SuccessMessage, ErrorMessage } from "./FormMessage";
+import { ErrorMessage } from "./FormMessage";
 
 import { ProfileFormSchema as formSchema } from "@/form-schemas";
 import { createProfile } from "@/actions/profile";
@@ -25,7 +25,6 @@ import { createProfile } from "@/actions/profile";
 export default function ProfileForm() {
   // action sucess/error handling
   const [error, setError] = useState<string | undefined>("");
-  const [success, setSuccess] = useState<string | undefined>("");
 
   // transition for actions
   const [isPending, startTransition] = useTransition();
@@ -41,13 +40,14 @@ export default function ProfileForm() {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     startTransition(async () => {
-      createProfile({
+      const res = await createProfile({
         username: values.username,
         bio: values.bio,
-      }).then((res) => {
-        setError(res.error);
-        setSuccess(res.success);
       });
+
+      if (res.error) {
+        setError(res.error);
+      }
     });
   }
 
@@ -101,10 +101,9 @@ export default function ProfileForm() {
             </FormItem>
           )}
         />
-        
-        {/* server action messages */}
+
+        {/* server action errors */}
         {error && <ErrorMessage message={error} />}
-        {success && <SuccessMessage message={success} />}
 
         <Button type="submit">
           {isPending ? (
