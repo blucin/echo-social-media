@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useTransition } from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -15,23 +16,41 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Loader2 } from "lucide-react";
+import { SuccessMessage, ErrorMessage } from "./FormMessage";
 
 import { ProfileFormSchema as formSchema } from "@/form-schemas";
+import { createProfile } from "@/actions/profile";
 
 export default function ProfileForm() {
+  // action sucess/error handling
+  const [error, setError] = useState<string | undefined>("");
+  const [success, setSuccess] = useState<string | undefined>("");
+
+  // transition for actions
+  const [isPending, startTransition] = useTransition();
+
+  // form state
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       username: "",
       bio: "",
-      thumbnail: undefined,
     },
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+    startTransition(async () => {
+      createProfile({
+        username: values.username,
+        bio: values.bio,
+      }).then((res) => {
+        setError(res.error);
+        setSuccess(res.success);
+      });
+    });
   }
-  
+
   return (
     <Form {...form}>
       <form
@@ -82,30 +101,20 @@ export default function ProfileForm() {
             </FormItem>
           )}
         />
+        
+        {/* server action messages */}
+        {error && <ErrorMessage message={error} />}
+        {success && <SuccessMessage message={success} />}
 
-        <FormField
-          control={form.control}
-          name="thumbnail"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Thumbnail</FormLabel>
-              <FormControl>
-                <Input
-                  className="w-full md:w-96"
-                  type="file"
-                  onChange={(e) => {
-                    form.setValue("thumbnail", e.target.files?.[0]);
-                  }}
-                />
-              </FormControl>
-              <FormDescription>
-                This is your profile thumbnail. This is optional.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
+        <Button type="submit">
+          {isPending ? (
+            <>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Please wait{" "}
+            </>
+          ) : (
+            "Create profile"
           )}
-        />
-        <Button type="submit">Submit</Button>
+        </Button>
       </form>
     </Form>
   );

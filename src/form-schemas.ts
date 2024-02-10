@@ -1,8 +1,10 @@
 import { z } from "zod";
 
-// profile form schema
+/*: TODO: Add support for thumbnail upload (Seems like it will moved to settings page. So, we can remove it from here.)
 const MAX_FILE_SIZE = 1 * 1024 * 1024; // 1MB
 const ACCEPTED_IMAGE_TYPES = ["jpeg", "jpg", "png"];
+*/
+// profile form schema
 export const ProfileFormSchema = z.object({
   username: z
     .string()
@@ -37,6 +39,7 @@ export const ProfileFormSchema = z.object({
         ),
     ])
     .optional(),
+  /*: TODO: Add support for thumbnail upload (Seems like it will moved to settings page. So, we can remove it from here.)
   thumbnail: z
     .union([
       z.undefined(),
@@ -57,4 +60,5 @@ export const ProfileFormSchema = z.object({
         ),
     ])
     .optional(),
+    */
 });
