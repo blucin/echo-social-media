@@ -44,8 +44,13 @@ export default function ProfileForm() {
         username: values.username,
         bio: values.bio,
       });
-
       if (res.error) {
+        if (res.error === "Username already exists") {
+          form.setError("username", {
+            message: "Username already exists",
+          })
+          return;
+        }
         setError(res.error);
       }
     });
