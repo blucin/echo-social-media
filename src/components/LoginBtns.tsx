@@ -1,13 +1,14 @@
 import { signIn, signOut } from "@/auth";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import { redirect } from "next/navigation";
 
 export function SignInBtn() {
   return (
     <form
       action={async () => {
         "use server";
-        await signIn("google");
+        await signIn("google", { redirectTo: "/home" });
       }}
     >
       <Button className="p-5 flex gap-2 items-center font-medium">
