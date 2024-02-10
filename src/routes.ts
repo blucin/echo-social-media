@@ -22,7 +22,7 @@ export const privateRoutes = [
  * regardless of whether they are logged in or not
  * or what their profile status is
  */
-export const apiAuthPrefix = '/api/auth';
+export const apiPrefixes = ['/api/auth', '/api/edgestore'];
 
 /**
  * Default redirect on sign in

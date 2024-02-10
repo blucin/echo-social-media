@@ -5,14 +5,14 @@ import {
   PROFILE_ROUTE,
   publicRoutes,
   privateRoutes,
-  apiAuthPrefix,
+  apiPrefixes,
 } from "@/routes";
 
 export default auth(async (req) => {
   const isLoggedIn = !!req.auth;
   const { nextUrl } = req;
 
-  if (nextUrl.pathname.startsWith(apiAuthPrefix)) {
+  if (apiPrefixes.some(pre => nextUrl.pathname.startsWith(pre))) { 
     // Skip authentication for API routes
     return;
   }
