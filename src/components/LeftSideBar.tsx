@@ -48,7 +48,7 @@ export default async function LeftSideBar({ navItems, className }: NavProps) {
             }}
           >
             <Button className="w-full py-7 xl:py-5">
-              <LogOutIcon className="xl:hidden" />
+              <LogOutIcon className="xl:hidden rotate-180" />
               <span className="hidden xl:block text-base font-semibold">
                 Sign Out
               </span>
