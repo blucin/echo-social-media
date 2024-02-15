@@ -8,7 +8,6 @@ import {
   CompassIcon,
   BellIcon,
   SettingsIcon,
-  FeatherIcon,
 } from "lucide-react";
 
 export default function MainLayout({
