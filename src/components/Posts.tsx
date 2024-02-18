@@ -43,7 +43,7 @@ export default function Posts({ postsPerLoad = 5 }: PostsProps) {
       if (lastPage.length < postsPerLoad) {
         return undefined;
       }
-      return allPages.length + 1;
+      return allPages.length;
     },
   });
 
