@@ -41,7 +41,10 @@ export default function Posts({ postsPerLoad = 5 }: PostsProps) {
     queryFn: async ({ pageParam = 0 }) => {
       return await fetchPosts({ pageParam, limit: postsPerLoad });
     },
-    getNextPageParam: (_, allPages) => {
+    getNextPageParam: (lastPage, allPages) => {
+      if (lastPage.length < postsPerLoad) {
+        return undefined;
+      }
       return allPages.length + 1;
     },
   });
