@@ -1,11 +1,13 @@
-import Post from "@/components/Post";
+import Posts from "@/components/Posts";
+import PostForm from "@/components/PostForm";
 
 export default async function Home() {
   return (
-    <main className="flex flex-col">
-      {[...Array(10)].map((x,i)=>
-        <Post key={i} />
-      )}
-    </main>
+    <>
+      <PostForm />
+      <main className="flex flex-col">
+        <Posts />
+      </main>
+    </>
   );
 }
