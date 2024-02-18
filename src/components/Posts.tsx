@@ -69,6 +69,7 @@ export default function Posts({ postsPerLoad = 5 }: PostsProps) {
       loader={<LoadingPosts postCnt={postsPerLoad} />}
       endMessage={
         <p className="text-center text-gray-500">
+          {/* TODO: make it work, currently not working */}
           <b>Yay! You have seen it all</b>
         </p>
       }
