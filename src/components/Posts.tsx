@@ -117,11 +117,6 @@ export default function Posts({ postsPerLoad = 5 }: PostsProps) {
           );
         })}
       </div>
-      {/*
-      {isFetchingNextPage && posts.length === postsPerLoad ? (
-        <LoadingPosts postCnt={postsPerLoad} />
-      ) : null}
-      */}
     </InfiniteScroll>
   );
 }
