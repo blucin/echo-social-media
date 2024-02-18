@@ -6,7 +6,7 @@ export default async function Home() {
     <>
       <PostForm />
       <main className="flex flex-col">
-        <Posts />
+        <Posts postsPerLoad={5} />
       </main>
     </>
   );
