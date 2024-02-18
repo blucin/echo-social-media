@@ -124,37 +124,3 @@ export default function Posts({ postsPerLoad = 5 }: PostsProps) {
     </div>
   );
 }
-
-/*
-{data.pages.map((page, i) => (
-        <div key={i} className="pt-4 pb-1 flex flex-col gap-3">
-          {page.map((post) => (
-            <div key={post.id} className="px-5 flex-1 border-b">
-              <div className="flex items-center gap-2">
-                <span className="font-semibold">Username</span>
-                <span className="text-gray-500">@{post.handle}</span>
-              </div>
-              <p className="mt-2 text-pretty">{post.content}</p>
-              <div className="mt-2 flex items-center gap-2">
-                <Button className="flex gap-1 items-center" variant="ghost">
-                  <HeartIcon className="h-4 w-4" />
-                  <span className="sr-only">Like</span>
-                  <span className="text-xs"> {post.likes} </span>
-                </Button>
-
-                <Button className="flex gap-1 items-center" variant="ghost">
-                  <ReplyIcon className="h-4 w-4" />
-                  <span className="sr-only">Comment</span>
-                  <span className="text-xs"> {post.comments} </span>
-                </Button>
-
-                <Button size="icon" variant="ghost">
-                  <RepeatIcon className="h-4 w-4" />
-                  <span className="sr-only">Retweet</span>
-                </Button>
-              </div>
-            </div>
-          ))}
-        </div>
-      ))}
-*/
