@@ -7,6 +7,7 @@ import "./globals.css";
 import { cn } from "../lib/utils";
 
 import { EdgeStoreProvider } from "../lib/edgestore";
+import { QueryProvider } from "@/components/QueryProvider";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -31,17 +32,19 @@ export default function RootLayout({
           fontSans.variable
         )}
       >
-        <EdgeStoreProvider>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            {children}
-            <Footer />
-          </ThemeProvider>
-        </EdgeStoreProvider>
+        <QueryProvider>
+          <EdgeStoreProvider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              {children}
+              <Footer />
+            </ThemeProvider>
+          </EdgeStoreProvider>
+        </QueryProvider>
       </body>
     </html>
   );
