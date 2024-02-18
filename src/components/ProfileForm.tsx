@@ -19,7 +19,7 @@ import { Input } from "@/components/ui/input";
 import { Loader2 } from "lucide-react";
 import { ErrorMessage } from "./FormMessage";
 
-import { ProfileFormSchema as formSchema } from "@/form-schemas";
+import { ProfileFormSchema as formSchema } from "@/schemas/form-schemas";
 import { createProfile } from "@/actions/profile";
 
 export default function ProfileForm() {
