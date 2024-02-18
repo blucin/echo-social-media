@@ -41,7 +41,7 @@ export default function RootLayout({
               disableTransitionOnChange
             >
               {children}
-              <Footer />
+              {/*<Footer />*/}
             </ThemeProvider>
           </EdgeStoreProvider>
         </QueryProvider>
