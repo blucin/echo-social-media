@@ -5,6 +5,8 @@ import { SignInBtn } from "./LoginBtns";
 import { createPost } from "@/db/queries/posts";
 import SubmitButton from "./SubmitButton";
 import { z } from "zod";
+import { Globe2Icon } from "lucide-react";
+import { Separator } from "./ui/separator";
 
 const formSchema = z.object({
   postContent: z
@@ -42,15 +44,15 @@ export default async function PostForm() {
     if (!validated.success) {
       return {
         errors: validated.error.flatten(),
-      }
+      };
     }
 
     if (!session) {
       return {
         error: "You must be logged in to post",
-      }
+      };
     }
-    
+
     const res = await createPost({
       userId: session.user.id,
       content: validated.data.postContent,
@@ -67,15 +69,26 @@ export default async function PostForm() {
         alt="Profile picture"
         width={50}
         height={50}
-        className={"rounded-full dark:border-white dark:border-2"}
+        className={"rounded-full"}
         priority
       />
       <div className="flex-1 flex flex-col gap-3">
         <Textarea
           name="postContent"
-          placeholder="What's happening?" 
+          placeholder="What's happening?"
+          className="text-xl border-none focus-visible:ring-0"
         />
-        <SubmitButton text="Post" revalidatequerykey={"posts"} className="ml-auto" size={"lg"}/>
+        <div className="flex items-center gap-2 text-gray-500 text-sm">
+          <Globe2Icon className="h-4 w-4" />
+          <span>Everyone can reply</span>
+        </div>
+        <Separator className="my-2"/>
+        <SubmitButton
+          text="Post"
+          revalidatequerykey={"posts"}
+          className="ml-auto text-base font-bold rounded-full"
+          size={"lg"}
+        />
       </div>
     </form>
   );
