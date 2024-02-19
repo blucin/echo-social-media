@@ -75,7 +75,7 @@ export default async function PostForm() {
           name="postContent"
           placeholder="What's happening?" 
         />
-        <SubmitButton text="Post" revalidateQueryKey={"posts"} className="ml-auto" size={"lg"}/>
+        <SubmitButton text="Post" revalidatequerykey={"posts"} className="ml-auto" size={"lg"}/>
       </div>
     </form>
   );

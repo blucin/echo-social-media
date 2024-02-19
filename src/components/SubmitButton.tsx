@@ -7,7 +7,7 @@ import { useQueryClient } from "@tanstack/react-query";
 
 export interface SubmitButtonProps extends ButtonProps {
   text?: string;
-  revalidateQueryKey?: string | string[];
+  revalidatequerykey?: string | string[];
 }
 
 export default function SubmitButton({ ...props }: SubmitButtonProps) {
@@ -15,7 +15,7 @@ export default function SubmitButton({ ...props }: SubmitButtonProps) {
   const queryClient = useQueryClient();
 
   if (!pending) {
-    queryClient.invalidateQueries({ queryKey: [props.revalidateQueryKey]});
+    queryClient.invalidateQueries({ queryKey: [props.revalidatequerykey]});
   }
   
   return (
