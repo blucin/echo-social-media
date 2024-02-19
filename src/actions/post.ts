@@ -1,6 +1,8 @@
 "use server";
 
 import { z } from "zod";
+import { auth } from "@/auth";
+import { createPost } from "@/db/queries/posts";
 
 const formSchema = z.object({
   postContent: z
@@ -15,14 +17,44 @@ const formSchema = z.object({
     }),
 });
 
-export async function createPost(formData: FormData) {
-  const validated = formSchema.safeParse({
-    postContent: formData.get("postContent"),
-  });
+type FormState = {
+  message: "success" | "error" | "idle";
+  postContent: string;
+  error?: string;
+};
 
-  if (!validated.success) {
+export async function handleCreatePost(
+  prevState: FormState,
+  formData: FormData
+): Promise<FormState> {
+  const postContent = formData.get("postContent");
+  const session = await auth();
+  if (!session) {
     return {
-      errors: validated.error.flatten(),
-    }
+      message: "error",
+      error: "You must be logged in to post",
+      postContent: postContent as string,
+    };
+  }
+  try {
+    const validated = formSchema.parse({
+      postContent,
+    });
+    await createPost({
+      userId: session.user.id,
+      content: validated.postContent,
+    });
+    return {
+      message: "success",
+      postContent: "",
+    };
+  } catch (error) {
+    const zodError = error as z.ZodError;
+    const errorMap = zodError.flatten().fieldErrors;
+    return {
+      message: "error",
+      error: errorMap["postContent"]?.[0] ?? "An error occurred",
+      postContent: postContent as string,
+    };
   }
 }
