@@ -1,71 +1,38 @@
+"use client";
+
 import Image from "next/image";
 import { Textarea } from "@/components/ui/textarea";
-import { auth } from "@/auth";
-import { SignInBtn } from "./LoginBtns";
-import { createPost } from "@/db/queries/posts";
+import { handleCreatePost } from "@/actions/post";
 import SubmitButton from "./SubmitButton";
-import { z } from "zod";
 import { Globe2Icon } from "lucide-react";
 import { Separator } from "./ui/separator";
+import { useFormState } from "react-dom";
+import { useRef, useEffect } from "react";
 
-const formSchema = z.object({
-  postContent: z
-    .string()
-    .min(1, "Post can't be empty")
-    .max(280, "Post can't be longer than 280 characters")
-    .refine((content) => !content.startsWith(" "), {
-      message: "Post can't start with a space",
-    })
-    .refine((content) => content.trim().length > 0, {
-      message: "Post can't be just spaces",
-    }),
-});
+type PostFormProps = {
+  userImage: string | null | undefined;
+};
 
-export default async function PostForm() {
-  const session = await auth();
+export default function PostForm({ ...props }: PostFormProps) {
+  const [formState, formAction] = useFormState(handleCreatePost, {
+    message: "idle",
+    postContent: "",
+  })
+  const formRef = useRef<HTMLFormElement>(null);
 
-  if (!session) {
-    return (
-      <div className="xl:hidden flex flex-col gap-3 px-5 py-10 border-b">
-        <p className="text-center text-gray-400">Log in to post</p>
-        <div className="flex justify-center">
-          <SignInBtn />
-        </div>
-      </div>
-    );
-  }
-
-  async function handleSubmit(formData: FormData) {
-    "use server";
-    const validated = formSchema.safeParse({
-      postContent: formData.get("postContent"),
-    });
-
-    if (!validated.success) {
-      return {
-        errors: validated.error.flatten(),
-      };
+  useEffect(() => {
+    if (formState.message === "success") {
+      formRef.current?.reset();
     }
-
-    if (!session) {
-      return {
-        error: "You must be logged in to post",
-      };
-    }
-
-    const res = await createPost({
-      userId: session.user.id,
-      content: validated.data.postContent,
-    });
-  }
+  }, [formState]);
 
   return (
     <form
-      action={handleSubmit}
+      action={formAction}
       className="flex gap-3 items-start px-5 py-10 border-b"
     >
       <Image
-        src={session?.user?.image || "/default-profile-pic.png"}
+        src={props.userImage || "/default-profile-pic.png"}
         alt="Profile picture"
         width={50}
         height={50}
@@ -78,11 +45,14 @@ export default async function PostForm() {
           placeholder="What's happening?"
           className="text-xl border-none focus-visible:ring-0"
         />
+        {formState.error && (
+          <p className="text-red-500 text-sm pl-3 py-1">{formState.error}</p>
+        )}
         <div className="flex items-center gap-2 text-gray-500 text-sm pl-3">
           <Globe2Icon className="h-4 w-4" />
           <span>Everyone can reply</span>
         </div>
-        <Separator className="my-2"/>
+        <Separator className="my-2" />
         <SubmitButton
           text="Post"
           revalidatequerykey={"posts"}
