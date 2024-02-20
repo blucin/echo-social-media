@@ -41,13 +41,13 @@ export default async function LeftSideBar({ navItems, className }: NavProps) {
         </div>
         {session ? (
           <form
-            className="w-full xl:mt-5"
+            className="flex justify-center w-full xl:mt-5"
             action={async () => {
               "use server";
               await signOut();
             }}
           >
-            <Button className="w-full py-7 xl:py-5">
+            <Button className="w-3/4 py-7 xl:py-5">
               <LogOutIcon className="xl:hidden rotate-180" />
               <span className="hidden xl:block text-base font-semibold">
                 Sign Out
@@ -56,7 +56,7 @@ export default async function LeftSideBar({ navItems, className }: NavProps) {
           </form>
         ) : (
           <Link href="/signin">
-            <Button className="w-full py-7 xl:py-5 xl:mt-5">
+            <Button className="w-3/4 py-7 xl:py-5 xl:mt-5">
               <LogInIcon className="xl:hidden" />
               <span className="hidden xl:block text-base font-semibold ">
                 Sign In
