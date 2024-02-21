@@ -28,6 +28,7 @@ export default function PostForm({ ...props }: PostFormProps) {
 
   return (
     <form
+      ref={formRef}
       action={formAction}
       className="flex gap-3 items-start px-5 py-10 border-b"
     >
