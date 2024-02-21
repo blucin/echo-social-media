@@ -5,6 +5,7 @@ import Post from "@/components/Post";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { type ResponseData } from "@/app/api/posts/fetch/route";
 import LoadingPosts from "@/components/LoadingPosts";
+import { XCircleIcon } from "lucide-react";
 
 const fetchPosts = async ({ pageParam = 0, limit = 2 }) => {
   try {
@@ -27,37 +28,32 @@ type PostsProps = {
 
 export default function Posts({ postsPerLoad = 5 }: PostsProps) {
   // read: https://react-query.tanstack.com/guides/infinite-queries
-  const {
-    data,
-    fetchNextPage,
-    error,
-    isError,
-    isLoading,
-    hasNextPage,
-  } = useInfiniteQuery({
-    queryKey: ["posts"],
-    initialPageParam: 0,
-    queryFn: async ({ pageParam = 0 }) => {
-      return await fetchPosts({ pageParam, limit: postsPerLoad });
-    },
-    getNextPageParam: (lastPage, allPages) => {
-      if (lastPage.length < postsPerLoad) {
-        return undefined;
-      }
-      return allPages.length;
-    },
-  });
+  const { data, fetchNextPage, error, isError, isLoading, hasNextPage } =
+    useInfiniteQuery({
+      queryKey: ["posts"],
+      initialPageParam: 0,
+      queryFn: async ({ pageParam = 0 }) => {
+        return await fetchPosts({ pageParam, limit: postsPerLoad });
+      },
+      getNextPageParam: (lastPage, allPages) => {
+        if (lastPage.length < postsPerLoad) {
+          return undefined;
+        }
+        return allPages.length;
+      },
+    });
 
   if (isLoading) {
     return <LoadingPosts postCnt={postsPerLoad} />;
   }
 
-  if (isError) {
-    return <div className="pt-4 pb-1">Error: {error.message}</div>;
-  }
-
-  if (!data) {
-    return <div className="pt-4 pb-1">No data</div>;
+  if (!data || error) {
+    return (
+      <div className="flex gap-2 py-5 bg-destructive justify-center text-red-500">
+        <XCircleIcon className="h-6 w-6" />
+        <span>Error: {error ? error.message: "No post contents found"}</span>
+      </div>
+    );
   }
 
   const posts = data?.pages?.flatMap((page) => page);
