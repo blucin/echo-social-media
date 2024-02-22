@@ -49,7 +49,9 @@ export default function MainLayout({
         />
         <div className="col-span-5 w-full border-x">
           <TopBar />
-          {children}
+          <div className="pt-5 pb-10">
+            {children}
+          </div>
         </div>
         <RightSideBar
           className="col-span-3 hidden xl:flex flex-col" 
