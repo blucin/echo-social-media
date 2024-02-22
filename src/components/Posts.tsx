@@ -72,7 +72,7 @@ export default function Posts({ postsPerLoad = 5 }: PostsProps) {
       }
     >
       <div className="pt-4 pb-1 flex flex-col gap-3">
-        {posts.map(({ post, user }, idx) => {
+        {posts.map(({ post, user }) => {
           return (
             <Post
               key={post.id}
