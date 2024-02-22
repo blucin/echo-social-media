@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { HeartIcon, ReplyIcon, RepeatIcon } from "lucide-react";
 import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 type PostProps = {
   id: string;
@@ -9,11 +10,18 @@ type PostProps = {
   authorName: string | null | undefined;
   authorUsername: string;
   authorImage: string | null | undefined;
+  className?: string;
 };
 
 export default function Post({ ...props }: PostProps) {
   return (
-    <div key={props.id} className="flex items-start gap-3 px-5 pb-2 border-b">
+    <div
+      key={props.id}
+      className={cn(
+        props.className,
+        "flex items-start gap-3 px-5 pb-2 border-b"
+      )}
+    >
       <Image
         src={props.authorImage ? props.authorImage : "/default-profile-pic.png"}
         alt="avatar"
@@ -37,7 +45,10 @@ export default function Post({ ...props }: PostProps) {
           </Button>
 
           <Button variant="ghost">
-            <Link className="flex gap-1 items-center" href={`/post/${props.id}`}>
+            <Link
+              className="flex gap-1 items-center"
+              href={`/post/${props.id}`}
+            >
               <ReplyIcon className="h-4 w-4" />
               <span className="sr-only">Comment</span>
               <span className="text-xs"> 69 </span>
