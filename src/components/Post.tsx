@@ -1,11 +1,12 @@
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { HeartIcon, ReplyIcon, RepeatIcon } from "lucide-react";
+import Link from "next/link";
 
 type PostProps = {
   id: string;
   content: string;
-  authorName: string;
+  authorName: string | null | undefined;
   authorUsername: string;
   authorImage: string | null | undefined;
 };
@@ -22,7 +23,9 @@ export default function Post({ ...props }: PostProps) {
       />
       <div className="flex-1">
         <div className="flex items-center gap-2">
-          <span className="font-semibold">{props.authorName}</span>
+          <span className="font-semibold">
+            {props.authorName ? props.authorName : props.authorUsername}
+          </span>
           <span className="text-gray-500">@{props.authorUsername}</span>
         </div>
         <p className="mt-2 text-pretty">{props.content}</p>
@@ -33,10 +36,12 @@ export default function Post({ ...props }: PostProps) {
             <span className="text-xs"> 0 </span>
           </Button>
 
-          <Button className="flex gap-1 items-center" variant="ghost">
-            <ReplyIcon className="h-4 w-4" />
-            <span className="sr-only">Comment</span>
-            <span className="text-xs"> 69 </span>
+          <Button variant="ghost">
+            <Link className="flex gap-1 items-center" href={`/post/${props.id}`}>
+              <ReplyIcon className="h-4 w-4" />
+              <span className="sr-only">Comment</span>
+              <span className="text-xs"> 69 </span>
+            </Link>
           </Button>
 
           <Button size="icon" variant="ghost">
