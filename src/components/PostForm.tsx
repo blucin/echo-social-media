@@ -30,7 +30,7 @@ export default function PostForm({ ...props }: PostFormProps) {
     <form
       ref={formRef}
       action={formAction}
-      className="flex gap-3 items-start px-5 py-10 border-b"
+      className="flex gap-3 items-start p-5 border-b"
     >
       <Image
         src={props.userImage || "/default-profile-pic.png"}
