@@ -49,7 +49,7 @@ export default function Posts({ postsPerLoad = 5 }: PostsProps) {
 
   if (!data || error) {
     return (
-      <div className="flex gap-2 py-5 bg-destructive justify-center text-red-500">
+      <div className="flex gap-2 py-5 bg-destructive justify-center text-white dark:text-red-500">
         <XCircleIcon className="h-6 w-6" />
         <span>Error: {error ? error.message: "No post contents found"}</span>
       </div>
