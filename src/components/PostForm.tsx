@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { Textarea } from "@/components/ui/textarea";
 import { handleCreatePost } from "@/actions/post";
-import SubmitButton from "./SubmitButton";
+import SubmitButton from "@/components/SubmitButton";
 import { Globe2Icon } from "lucide-react";
 import { Separator } from "./ui/separator";
 import { useFormState } from "react-dom";
