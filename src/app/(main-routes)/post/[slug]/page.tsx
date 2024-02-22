@@ -1,6 +1,7 @@
 import Post from "@/components/Post";
 import { getPostById } from "@/db/queries/posts";
 import { XCircleIcon } from "lucide-react";
+import Comments from "@/components/Comments";
 
 export default async function PostDetails({
   params,
@@ -9,7 +10,7 @@ export default async function PostDetails({
 }) {
   const post = await getPostById(params.slug);
   if (!post || !post.length || post[0].user.username === null) {
-    return(
+    return (
       <main className="flex items-center justify-center h-full">
         <div className=" text-red-500 flex flex-col items-center gap-4">
           <XCircleIcon className="h-12 w-12" />
@@ -27,6 +28,7 @@ export default async function PostDetails({
         authorUsername={post[0].user.username}
         content={post[0].post.content}
       />
+      <Comments postId={post[0].post.id} />
     </main>
   );
 }
