@@ -31,3 +31,22 @@ export async function getPosts({ pageParam = 0, limit = 5 }) {
     .limit(limit)
     .offset(pageParam * limit);
 }
+
+export async function getPostById(id: string) {
+  return db
+    .select({
+      user: {
+        name: user.name,
+        username: user.username,
+        image: user.image
+      },
+      post: {
+        id: post.id,
+        content: post.content,
+        createdAt: post.createdAt,
+      },
+    })
+    .from(post)
+    .innerJoin(user, eq(post.userId, user.id))
+    .where(eq(post.id, id));
+}
