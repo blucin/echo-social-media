@@ -23,6 +23,7 @@ type FormState = {
   error?: string;
 };
 
+// sorry for 2 tabs of indentation whoevers reading this
 export async function handleCreatePost(
   prevState: FormState,
   formData: FormData
@@ -49,12 +50,19 @@ export async function handleCreatePost(
       postContent: "",
     };
   } catch (error) {
-    const zodError = error as z.ZodError;
-    const errorMap = zodError.flatten().fieldErrors;
-    return {
-      message: "error",
-      error: errorMap["postContent"]?.[0] ?? "An error occurred",
-      postContent: postContent as string,
-    };
+    if (error instanceof z.ZodError) {
+      const errorMap = error.flatten().fieldErrors;
+      return {
+        message: "error",
+        error: errorMap["postContent"]?.[0] ?? "An error occurred",
+        postContent: postContent as string,
+      };
+    } else {
+      return {
+        message: "error",
+        error: "An error occurred",
+        postContent: postContent as string,
+      };
+    }
   }
 }
