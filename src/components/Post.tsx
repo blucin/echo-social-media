@@ -30,12 +30,17 @@ export default function Post({ ...props }: PostProps) {
         className="rounded-full"
       />
       <div className="flex-1">
-        <div className="flex items-center gap-2">
-          <span className="font-semibold">
+        <Link
+          href={`/user/${props.authorUsername}/`}
+          className="flex items-center gap-2"
+        >
+          <span className="font-semibold hover:underline">
             {props.authorName ? props.authorName : props.authorUsername}
           </span>
-          <span className="text-gray-500">@{props.authorUsername}</span>
-        </div>
+          <span className="text-gray-500 hover:underline">
+            @{props.authorUsername}
+          </span>
+        </Link>
         <p className="mt-2 text-pretty">{props.content}</p>
         <div className="mt-2 flex items-center gap-2">
           <Button className="flex gap-1 items-center" variant="ghost">
