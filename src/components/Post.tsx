@@ -32,7 +32,7 @@ export default function Post({ ...props }: PostProps) {
       <div className="flex-1">
         <Link
           href={`/user/${props.authorUsername}/`}
-          className="flex items-center gap-2"
+          className="flex items-center gap-2 w-fit"
         >
           <span className="font-semibold hover:underline">
             {props.authorName ? props.authorName : props.authorUsername}
