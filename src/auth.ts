@@ -44,9 +44,9 @@ export const authConfig = {
 
       if (!existingUser) return token;
 
-      token.username = existingUser[0].username ?? "";
-      token.bio = existingUser[0].bio ?? "";
-      token.bannerImage = existingUser[0].bannerImage ?? "";
+      token.username = existingUser.username ?? "";
+      token.bio = existingUser.bio ?? "";
+      token.bannerImage = existingUser.bannerImage ?? "";
 
       return token;
     },
