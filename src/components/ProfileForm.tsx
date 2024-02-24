@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Loader2 } from "lucide-react";
-import { ErrorMessage } from "./FormMessage";
+import { ErrorMessage } from "@/components/FormMessage";
 
 import { ProfileFormSchema as formSchema } from "@/schemas/form-schemas";
 import { createProfile } from "@/actions/profile";
