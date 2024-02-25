@@ -5,7 +5,7 @@ import TopBar from "@/components/TopBar";
 import {
   AudioLinesIcon,
   HomeIcon,
-  CompassIcon,
+  CircleUserRoundIcon,
   BellIcon,
   SettingsIcon,
 } from "lucide-react";
@@ -31,8 +31,8 @@ export default function MainLayout({
               path: "/home",
             },
             {
-              name: "Explore",
-              SvgIconComponent: CompassIcon,
+              name: "Profile",
+              SvgIconComponent: CircleUserRoundIcon,
               path: "/explore",
             },
             {
@@ -49,12 +49,12 @@ export default function MainLayout({
         />
         <div className="col-span-5 w-full border-x">
           <TopBar />
-          <div className="pt-5 pb-10">
+          <div className="pb-14">
             {children}
           </div>
         </div>
         <RightSideBar
-          className="col-span-3 hidden xl:flex flex-col" 
+          className="col-span-3 w-full hidden xl:flex flex-col" 
         />
       </div>
     </>
