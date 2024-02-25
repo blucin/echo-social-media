@@ -27,6 +27,7 @@ export async function getPosts({ pageParam = 0, limit = 5 }) {
     })
     .from(post)
     .innerJoin(user, eq(post.userId, user.id))
+    .where(eq(user.isPrivate, false))
     .orderBy(desc(post.createdAt))
     .limit(limit)
     .offset(pageParam * limit);
