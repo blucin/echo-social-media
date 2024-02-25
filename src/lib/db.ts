@@ -7,6 +7,7 @@ import * as postSchema from "@/db/schema/posts";
 import * as commentSchema from "@/db/schema/comments";
 import * as followSchema from "@/db/schema/followers";
 import * as likeSchema from "@/db/schema/likes";
+import * as notificationSchema from "@/db/schema/notifications";
 
 const db = drizzle(sql, {
   schema: {
@@ -15,6 +16,7 @@ const db = drizzle(sql, {
     ...commentSchema,
     ...followSchema,
     ...likeSchema,
+    ...notificationSchema,
   },
 });
 

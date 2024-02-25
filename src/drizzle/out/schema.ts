@@ -1,6 +1,7 @@
-import { pgTable, foreignKey, text, timestamp, unique, boolean, primaryKey, integer } from "drizzle-orm/pg-core"
+import { pgTable, foreignKey, pgEnum, text, timestamp, unique, boolean, primaryKey, integer } from "drizzle-orm/pg-core"
   import { sql } from "drizzle-orm"
 
+export const notificationType = pgEnum("notificationType", ['comment', 'like', 'follow'])
 
 
 export const session = pgTable("session", {
@@ -24,6 +25,12 @@ export const user = pgTable("user", {
 	return {
 		userUsernameUnique: unique("user_username_unique").on(table.username),
 	}
+});
+
+export const notification = pgTable("notification", {
+	id: text("id").primaryKey().notNull(),
+	userId: text("userId").notNull().references(() => user.id, { onDelete: "cascade" } ),
+	notificationType: notificationType("notificationType").notNull(),
 });
 
 export const comment = pgTable("comment", {
