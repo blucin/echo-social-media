@@ -8,19 +8,22 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import DeletePostButton from "@/components/DeletePostButton";
 
 export default async function UserPosts({
   userId,
   username,
   page,
   limit,
+  showDeleteBtn = false,
 }: {
   userId: string;
   username: string;
   page: number;
   limit: number;
+  showDeleteBtn?: boolean;
 }) {
-  const posts = await getPostsByUserId(userId, page-1, limit);
+  const posts = await getPostsByUserId(userId, page - 1, limit);
   if (!posts || posts.length === 0) {
     return (
       <div className="flex items-center justify-center py-5">
@@ -31,18 +34,28 @@ export default async function UserPosts({
   return (
     <div className="flex flex-col gap-4 mt-4">
       {posts.map((post) => (
-        <Post
-          key={post.post.id}
-          id={post.post.id}
-          authorName={post.user.name}
-          authorUsername={post.user.username ? post.user.username : "undefined"}
-          authorImage={
-            post.user.image ? post.user.image : "/default-profile-pic.png"
-          }
-          content={post.post.content}
-        />
+        <div key={post.post.id} className="relative">
+          <Post
+            id={post.post.id}
+            authorName={post.user.name}
+            authorUsername={
+              post.user.username ? post.user.username : "undefined"
+            }
+            authorImage={
+              post.user.image ? post.user.image : "/default-profile-pic.png"
+            }
+            content={post.post.content}
+            className="flex-1"
+          />
+          {showDeleteBtn && (
+            <DeletePostButton
+              postId={post.post.id}
+              className="text-red-500 dark:text-red-400 absolute top-0 right-0"
+            />
+          )}
+        </div>
       ))}
-      <Pagination className="mb-2">
+      <Pagination>
         <PaginationContent>
           {page > 1 && (
             <PaginationItem>
