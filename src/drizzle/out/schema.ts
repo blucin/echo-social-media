@@ -1,4 +1,4 @@
-import { pgTable, foreignKey, text, timestamp, unique, primaryKey, integer } from "drizzle-orm/pg-core"
+import { pgTable, foreignKey, text, timestamp, unique, boolean, primaryKey, integer } from "drizzle-orm/pg-core"
   import { sql } from "drizzle-orm"
 
 
@@ -18,6 +18,7 @@ export const user = pgTable("user", {
 	username: text("username"),
 	bio: text("bio"),
 	bannerImage: text("bannerImage"),
+	isPrivate: boolean("isPrivate").default(false).notNull(),
 },
 (table) => {
 	return {

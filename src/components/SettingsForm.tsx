@@ -17,6 +17,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Switch } from "@/components/ui/switch";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Loader2 } from "lucide-react";
 import { ErrorMessage } from "@/components/FormMessage";
@@ -31,6 +32,7 @@ type SettingsFormProps = {
   bio: string | undefined;
   bannerImage: string | undefined | null;
   image: string | undefined | null;
+  isPrivate: boolean | undefined;
 };
 
 // TODO: Add type safety
@@ -57,6 +59,7 @@ export default function SettingsForm({ ...props }: SettingsFormProps) {
       bio: props.bio,
       bannerImage: undefined,
       image: undefined,
+      isPrivate: props.isPrivate,
     },
   });
 
@@ -92,6 +95,7 @@ export default function SettingsForm({ ...props }: SettingsFormProps) {
           bannerImage:
             bannerImageURL !== props.bannerImage ? bannerImageURL : undefined,
           image: imageURL !== props.image ? imageURL : undefined,
+          isPrivate: values.isPrivate !== props.isPrivate ? values.isPrivate : undefined,
         };
         const payload = Object.fromEntries(
           Object.entries(temp).filter(([, v]) => v !== undefined)
@@ -180,6 +184,28 @@ export default function SettingsForm({ ...props }: SettingsFormProps) {
                 </FormControl>
                 <FormDescription>This is your unique username</FormDescription>
                 <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="isPrivate"
+            render={({ field }) => (
+              <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
+                <div className="space-y-0.5">
+                  <FormLabel>Private Account</FormLabel>
+                  <FormDescription>
+                    When your account is private, only your followers can see
+                    your posts
+                  </FormDescription>
+                </div>
+                <FormControl>
+                  <Switch
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                </FormControl>
               </FormItem>
             )}
           />

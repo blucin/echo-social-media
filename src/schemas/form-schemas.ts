@@ -84,4 +84,5 @@ export const SettingsPageFormSchema = ProfileFormSchema.extend({
     }),
   bannerImage: ImageSchema,
   image: ImageSchema,
+  isPrivate: z.boolean().optional(),
 });

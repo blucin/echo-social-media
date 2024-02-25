@@ -11,6 +11,7 @@ export async function getUserById(id: string) {
       bio: true,
       image: true,
       bannerImage: true,
+      isPrivate: true,
     },
     where: eq(user.id, id),
   });
@@ -25,6 +26,7 @@ export async function getUserByUsername(username: string) {
       bio: true,
       image: true,
       bannerImage: true,
+      isPrivate: true,
     },
     where: eq(user.username, username),
   });

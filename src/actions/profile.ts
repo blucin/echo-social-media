@@ -51,6 +51,7 @@ const updateProfileSchema = z.object({
   bio: z.string().optional(),
   bannerImage: z.string().optional(),
   image: z.string().optional(),
+  isPrivate: z.boolean().optional(),
 });
 export const updateProfile = async (data: any) => {
   try {

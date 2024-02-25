@@ -32,6 +32,7 @@ export default async function SettingsPage() {
         bio={user.bio || ""}
         bannerImage={user.bannerImage || undefined}
         image={user.image || undefined}
+        isPrivate={user.isPrivate}
       />
     </main>
   );
