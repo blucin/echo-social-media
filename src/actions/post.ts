@@ -2,7 +2,8 @@
 
 import { z } from "zod";
 import { auth } from "@/auth";
-import { createPost } from "@/db/queries/posts";
+import { createPost, getPostById, deletePost } from "@/db/queries/posts";
+import { revalidatePath } from "next/cache";
 
 const formSchema = z.object({
   postContent: z
@@ -64,5 +65,25 @@ export async function handleCreatePost(
         postContent: postContent as string,
       };
     }
+  }
+}
+
+export async function handleDeletePost(postId: string) {
+  try {
+    const session = await auth();
+    if (!session) {
+      throw new Error("You must be logged in to delete a post");
+    }
+    const toDelete = await getPostById(postId);
+    if (!toDelete || toDelete[0].user.id !== session.user.id) {
+      throw new Error("You can only delete your own posts");
+    }
+    await deletePost(postId);
+    revalidatePath("/(main-routes)/user/[username]/", "page");
+  } catch (error) {
+    return {
+      message: "error",
+      error: error,
+    };
   }
 }
