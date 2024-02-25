@@ -9,6 +9,7 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import DeletePostButton from "@/components/DeletePostButton";
+import { format } from "date-fns";
 
 export default async function UserPosts({
   userId,
@@ -45,6 +46,7 @@ export default async function UserPosts({
               post.user.image ? post.user.image : "/default-profile-pic.png"
             }
             content={post.post.content}
+            uploadedAt={format(new Date(post.post.createdAt), "MMM d, y")}
             className="flex-1"
           />
           {showDeleteBtn && (

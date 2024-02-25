@@ -6,6 +6,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { type ResponseData } from "@/app/api/posts/fetch/route";
 import LoadingPosts from "@/components/LoadingPosts";
 import { XCircleIcon } from "lucide-react";
+import { format } from "date-fns";
 
 const fetchPosts = async ({ pageParam = 0, limit = 2 }) => {
   try {
@@ -80,6 +81,7 @@ export default function Posts({ postsPerLoad = 5 }: PostsProps) {
               authorName={user.name ? user.name : ""}
               authorUsername={user.username ? user.username : "unknown"}
               authorImage={user.image}
+              uploadedAt={format(new Date(post.createdAt), "MMM d, y")}
             />
           );
         })}

@@ -2,6 +2,7 @@ import Post from "@/components/Post";
 import { getPostById } from "@/db/queries/posts";
 import { XCircleIcon } from "lucide-react";
 import Comments from "@/components/Comments";
+import { format } from "date-fns";
 
 export default async function PostDetails({
   params,
@@ -27,6 +28,7 @@ export default async function PostDetails({
         authorName={post[0].user.name}
         authorUsername={post[0].user.username}
         content={post[0].post.content}
+        uploadedAt={format(new Date(post[0].post.createdAt), "MMM d, y")}
       />
       <Comments postId={post[0].post.id} />
     </main>
