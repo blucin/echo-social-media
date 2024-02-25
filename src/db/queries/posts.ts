@@ -17,7 +17,7 @@ export async function getPosts({ pageParam = 0, limit = 5 }) {
       user: {
         name: user.name,
         username: user.username,
-        image: user.image
+        image: user.image,
       },
       post: {
         id: post.id,
@@ -36,9 +36,10 @@ export async function getPostById(id: string) {
   return db
     .select({
       user: {
+        id: user.id,
         name: user.name,
         username: user.username,
-        image: user.image
+        image: user.image,
       },
       post: {
         id: post.id,
@@ -51,13 +52,17 @@ export async function getPostById(id: string) {
     .where(eq(post.id, id));
 }
 
-export async function getPostsByUserId(userId: string, pageParam: number, limit: number) {
+export async function getPostsByUserId(
+  userId: string,
+  pageParam: number,
+  limit: number
+) {
   return db
     .select({
       user: {
         name: user.name,
         username: user.username,
-        image: user.image
+        image: user.image,
       },
       post: {
         id: post.id,
@@ -71,4 +76,8 @@ export async function getPostsByUserId(userId: string, pageParam: number, limit:
     .orderBy(desc(post.createdAt))
     .limit(limit)
     .offset(pageParam * limit);
+}
+
+export async function deletePost(id: string) {
+  return db.delete(post).where(eq(post.id, id));
 }
