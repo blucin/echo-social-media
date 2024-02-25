@@ -1,10 +1,6 @@
 import { z } from "zod";
 
-/*: TODO: Add support for thumbnail upload (Seems like it will moved to settings page. So, we can remove it from here.)
-const MAX_FILE_SIZE = 1 * 1024 * 1024; // 1MB
-const ACCEPTED_IMAGE_TYPES = ["jpeg", "jpg", "png"];
-*/
-// profile form schema
+// Profile Form Schema
 export const ProfileFormSchema = z.object({
   username: z
     .string()
@@ -39,26 +35,53 @@ export const ProfileFormSchema = z.object({
         ),
     ])
     .optional(),
-  /*: TODO: Add support for thumbnail upload (Seems like it will moved to settings page. So, we can remove it from here.)
-  thumbnail: z
-    .union([
-      z.undefined(),
-      z
-        .any()
-        .optional()
-        .refine(
-          (file) => file instanceof File || file instanceof FileList,
-          "Please upload a valid file."
-        )
-        .refine(
-          (file) => ACCEPTED_IMAGE_TYPES.includes(file.type.split("/")[1]),
-          "File type must be one of .jpeg, .jpg, .png"
-        )
-        .refine(
-          (file) => file.size <= MAX_FILE_SIZE,
-          "File size must not exceed the maximum file size."
-        ),
-    ])
-    .optional(),
-    */
+});
+
+// Settings Form Schema
+const MAX_FILE_SIZE = 1 * 1024 * 1024; // 1MB
+const ACCEPTED_IMAGE_TYPES = ["jpeg", "jpg", "png"];
+const ImageSchema = z
+  .union([
+    z.undefined(),
+    z
+      .any()
+      .optional()
+      .refine(
+        (file) => file instanceof File || file instanceof FileList,
+        "Please upload a valid file."
+      )
+      .refine(
+        (file) => {
+          if (file instanceof File) {
+            return ACCEPTED_IMAGE_TYPES.includes(file.type.split("/")[1]);
+          } else if (file instanceof FileList) {
+            return Array.from(file).every(f => ACCEPTED_IMAGE_TYPES.includes(f.type.split("/")[1]));
+          }
+          return false;
+        },
+        "File type must be one of .jpeg, .jpg, .png"
+      )
+      .refine(
+        (file) => {
+          if (file instanceof File) {
+            return file.size <= MAX_FILE_SIZE;
+          } else if (file instanceof FileList) {
+            return Array.from(file).every(f => f.size <= MAX_FILE_SIZE);
+          }
+          return false;
+        },
+        "File size must not exceed the maximum file size."
+      ),
+  ])
+  .optional();
+export const SettingsPageFormSchema = ProfileFormSchema.extend({
+  displayName: z
+    .string()
+    .min(3)
+    .max(50)
+    .refine((name) => /^[a-zA-Z0-9_ ]+$/.test(name), {
+      message: "Name can only contain letters, numbers, and spaces",
+    }),
+  bannerImage: ImageSchema,
+  image: ImageSchema,
 });
