@@ -47,7 +47,7 @@ export default async function LeftSideBar({ navItems, className }: NavProps) {
               await signOut();
             }}
           >
-            <Button className="py-7 xl:py-5 xl:w-3/4">
+            <Button className="w-full py-7 xl:py-5 xl:w-3/4">
               <LogOutIcon className="xl:hidden rotate-180" />
               <span className="hidden xl:block text-base font-semibold">
                 Sign Out
@@ -56,7 +56,7 @@ export default async function LeftSideBar({ navItems, className }: NavProps) {
           </form>
         ) : (
           <Link href="/signin">
-            <Button className="py-7 xl:py-5 xl:mt-5 xl:w-3/4">
+            <Button className="w-full py-7 xl:py-5 xl:mt-5 xl:w-3/4">
               <LogInIcon className="xl:hidden" />
               <span className="hidden xl:block text-base font-semibold ">
                 Sign In
