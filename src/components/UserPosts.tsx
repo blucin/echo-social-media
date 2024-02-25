@@ -16,13 +16,13 @@ export default async function UserPosts({
   username,
   page,
   limit,
-  showDeleteBtn = false,
+  isUserOwner = false,
 }: {
   userId: string;
   username: string;
   page: number;
   limit: number;
-  showDeleteBtn?: boolean;
+  isUserOwner?: boolean;
 }) {
   const posts = await getPostsByUserId(userId, page - 1, limit);
   if (!posts || posts.length === 0) {
@@ -49,7 +49,7 @@ export default async function UserPosts({
             uploadedAt={format(new Date(post.post.createdAt), "MMM d, y")}
             className="flex-1"
           />
-          {showDeleteBtn && (
+          {isUserOwner && (
             <DeletePostButton
               postId={post.post.id}
               className="text-red-500 dark:text-red-400 absolute top-0 right-0"

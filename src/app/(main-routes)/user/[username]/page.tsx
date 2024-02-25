@@ -72,7 +72,7 @@ export default async function UserPage({
           page={page}
           limit={7}
           username={user.username}
-          showDeleteBtn={session?.user?.id === user.id}
+          isUserOwner={session?.user?.id === user.id}
         />
       </Suspense>
     </>
