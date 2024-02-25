@@ -11,6 +11,7 @@ type PostProps = {
   authorUsername: string;
   authorImage: string | null | undefined;
   className?: string;
+  uploadedAt?: string;
 };
 
 export default function Post({ ...props }: PostProps) {
@@ -40,6 +41,9 @@ export default function Post({ ...props }: PostProps) {
           <span className="text-gray-500 hover:underline">
             @{props.authorUsername}
           </span>
+          {props.uploadedAt !== undefined ? (
+            <span className="text-gray-500"> · {props.uploadedAt}</span>
+          ) : null}
         </Link>
         <p className="mt-2 text-pretty">{props.content}</p>
         <div className="mt-2 flex items-center gap-2">
