@@ -2,8 +2,10 @@ import { getUserByUsername } from "@/db/queries/users";
 import { XCircleIcon } from "lucide-react";
 import UserPosts from "@/components/UserPosts";
 import Image from "next/image";
-import { Suspense } from 'react';
+import { Suspense } from "react";
 import LoadingPosts from "@/components/LoadingPosts";
+import { auth } from "@/auth";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 // TODO: Add followers and following count
 export default async function UserPage({
@@ -29,20 +31,25 @@ export default async function UserPage({
     );
   }
 
+  const session = await auth();
+
   return (
     <>
-      <div className="relative border-b">
-        <div className="flex flex-col items-center justify-center h-40 bg-accent">
+      <div className="border-b pb-5">
+        <AspectRatio
+          ratio={2.3 / 0.7}
+          className="bg-muted border-b z-10 opacity-80"
+        >
           {user.bannerImage ? (
             <Image
               src={user.bannerImage}
               alt="banner"
-              width={500}
-              height={200}
+              fill
+              className="rounded-md object-cover"
             />
           ) : null}
-        </div>
-        <div className="flex items-center gap-4 px-5 pt-8 pb-5 absolute top-28 left-0 right-0">
+        </AspectRatio>
+        <div className="flex items-center gap-4 relative top-[-20px] left-5 z-20">
           <Image
             src={user.image || "/default-profile.png"}
             alt="profile"
@@ -55,15 +62,17 @@ export default async function UserPage({
             <p className="text-gray-500">@{user.username}</p>
           </div>
         </div>
-        {/* Placeholder div to provide offset */}
-        <div className="pt-20 pb-5" />
+        <blockquote className="border-l-4 pl-3 italic text-pretty mx-4">
+          {user.bio || "No bio"}
+        </blockquote>
       </div>
-      <Suspense fallback={<LoadingPosts postCnt={7}/>}>
+      <Suspense fallback={<LoadingPosts postCnt={7} />}>
         <UserPosts
           userId={user.id}
           page={page}
           limit={7}
           username={user.username}
+          showDeleteBtn={session?.user?.id === user.id}
         />
       </Suspense>
     </>
