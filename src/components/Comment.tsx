@@ -10,7 +10,6 @@ type CommentProps = {
 };
 
 export default function Comment({ ...props }: CommentProps) {
-  console.log("CommentProps", props);
   return (
     <div className={cn(props.className, "flex items-start gap-3 px-8 pb-5 border-b")}>
       <Image
