@@ -27,16 +27,17 @@ export default async function LeftSideBar({ navItems, className }: NavProps) {
       <div className="flex flex-1 xl:w-60 flex-col sticky top-0 h-screen xl:mr-5">
         <div className="flex flex-col items-start">
           {navItems.map((item, idx) => (
-            <Button
-              variant="ghost"
-              className="flex gap-5 justify-center py-8 text-center text-xl"
-              key={idx}
-            >
-              <item.SvgIconComponent className="w-7 h-7" />
-              <div className="hidden xl:inline-flex flex-none text-lg font-medium">
-                {item.name}
-              </div>
-            </Button>
+            <Link href={item.path} key={idx}>
+              <Button
+                variant="ghost"
+                className="flex gap-5 justify-center py-8 text-center text-xl"
+              >
+                <item.SvgIconComponent className="w-7 h-7" />
+                <div className="hidden xl:inline-flex flex-none text-lg font-medium">
+                  {item.name}
+                </div>
+              </Button>
+            </Link>
           ))}
         </div>
         {session ? (
