@@ -1,3 +1,4 @@
+import { auth } from "@/auth";
 import LeftSideBar from "@/components/LeftSideBar";
 import RightSideBar from "@/components/RightSideBar";
 import TopBar from "@/components/TopBar";
@@ -10,11 +11,12 @@ import {
   SettingsIcon,
 } from "lucide-react";
 
-export default function MainLayout({
+export default async function MainLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const session = await auth();
   return (
     <>
       <div className="min-h-screen flex max-w-7xl mx-auto xl:grid xl:grid-cols-10">
@@ -33,12 +35,12 @@ export default function MainLayout({
             {
               name: "Profile",
               SvgIconComponent: CircleUserRoundIcon,
-              path: "/explore",
+              path: session ? `/user/${session.user.username}` : "/signin",
             },
             {
               name: "Notification",
               SvgIconComponent: BellIcon,
-              path: "/notification",
+              path: "/notifications",
             },
             {
               name: "Settings",
