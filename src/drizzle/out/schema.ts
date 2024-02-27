@@ -31,6 +31,8 @@ export const notification = pgTable("notification", {
 	id: text("id").primaryKey().notNull(),
 	userId: text("userId").notNull().references(() => user.id, { onDelete: "cascade" } ),
 	notificationType: notificationType("notificationType").notNull(),
+	fromUserId: text("fromUserId").notNull().references(() => user.id, { onDelete: "cascade" } ),
+	hasRead: boolean("hasRead").default(false).notNull(),
 });
 
 export const comment = pgTable("comment", {

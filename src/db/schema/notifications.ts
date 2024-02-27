@@ -1,4 +1,4 @@
-import { pgTable, pgEnum, text } from "drizzle-orm/pg-core";
+import { pgTable, pgEnum, text, boolean } from "drizzle-orm/pg-core";
 import { users } from "./users";
 
 export const notificationTypesEnum = pgEnum("notificationType", [
@@ -12,5 +12,7 @@ export const notifications = pgTable("notification", {
   userId: text("userId")
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
+  fromUserId: text("fromUserId").notNull().references(() => users.id, { onDelete: "cascade" }),
   type: notificationTypesEnum("notificationType").notNull(),
+  hasRead: boolean("hasRead").notNull().default(false),
 });
