@@ -40,7 +40,6 @@ export default async function FollowButtonForm({
   if (alreadyFollowing) {
     return (
       <UnfollowButton
-        followerId={props.followerId}
         followeeId={props.followeeId}
         className={props.className}
       />
@@ -64,7 +63,6 @@ export default async function FollowButtonForm({
   
   return (
     <FollowButton
-      followerId={props.followerId}
       followeeId={props.followeeId}
       className={props.className}
     />

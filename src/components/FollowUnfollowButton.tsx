@@ -7,7 +7,6 @@ import { handleDeleteFollower } from "@/actions/followers";
 import { cn } from "@/lib/utils";
 
 type ButtonProps = {
-  followerId: string;
   followeeId: string;
   className?: string;
 };
@@ -44,7 +43,6 @@ export function FollowButton({ ...props }: ButtonProps) {
     startTransition(async () => {
       await handleCreateFollowNotifs({
         userId: props.followeeId,
-        fromUserId: props.followerId,
       });
     });
   };
