@@ -11,7 +11,6 @@ import { revalidatePath } from "next/cache";
 
 const CreateFollowNotifsSchema = z.object({
   userId: z.string(),
-  fromUserId: z.string(),
 });
 
 export async function handleCreateFollowNotifs(
@@ -26,7 +25,7 @@ export async function handleCreateFollowNotifs(
       };
     }
     const validated = CreateFollowNotifsSchema.parse(data);
-    if (validated.userId === validated.fromUserId) {
+    if (validated.userId === session.user.id) {
       return {
         message: "error",
         error: "You can't follow yourself",
@@ -34,7 +33,7 @@ export async function handleCreateFollowNotifs(
     }
     await createNotificationByUserId(
       validated.userId,
-      validated.fromUserId,
+      session.user.id,
       "follow"
     );
     revalidatePath("/(main-routes)");
@@ -74,9 +73,15 @@ export async function handleMarkNotifsAsRead(notifId: string) {
         error: "Notification not found",
       };
     }
+    if (toMark.userId !== session.user.id) {
+      return {
+        message: "error",
+        error: "You can't mark notifications as read for other users",
+      };
+    }
     await markNotificationAsRead({
       notifId,
-      userId: toMark.userId,
+      userId: session.user.id,
       notificationType: "follow",
       fromUserId: toMark.fromUserId,
     });
