@@ -24,7 +24,6 @@ const fetchComments = async ({ pageParam = 0, limit = 2, postId }: {
     const data: ResponseData = await res.json();
     return data;
   } catch (error) {
-    console.error(error);
     throw new Error("Some error occurred while fetching comments.");
   }
 }
