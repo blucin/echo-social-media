@@ -92,7 +92,7 @@ export default function Posts({ postsPerLoad = 5, followingOnly }: PostsProps) {
       }
     >
       <div className="pt-4 pb-1 flex flex-col gap-3">
-        {posts.map(({ post, user }) => {
+        {posts.map(({ post, user, commentsCount }) => {
           return (
             <Post
               key={post.id}
@@ -102,6 +102,7 @@ export default function Posts({ postsPerLoad = 5, followingOnly }: PostsProps) {
               authorUsername={user.username ? user.username : "unknown"}
               authorImage={user.image}
               uploadedAt={format(new Date(post.createdAt), "MMM d, y")}
+              commentsCnt={commentsCount}
             />
           );
         })}
