@@ -1,6 +1,6 @@
 import db from "@/lib/db";
-import { post, user, follower } from "@/drizzle/out/schema";
-import { desc, eq, and } from "drizzle-orm";
+import { post, user, follower, comment } from "@/drizzle/out/schema";
+import { desc, eq, and, count, sql } from "drizzle-orm";
 import { createId } from "@paralleldrive/cuid2";
 
 export async function createPost(input: { userId: string; content: string }) {
@@ -12,6 +12,14 @@ export async function createPost(input: { userId: string; content: string }) {
 }
 
 export async function getPosts({ pageParam = 0, limit = 5 }) {
+  const commentsCntSubQuery = db
+    .select({
+      postId: comment.postId,
+      commentsCnt: sql<number>`count(*)`.as('comments_count'), 
+    })
+    .from(comment)
+    .groupBy(comment.postId)
+    .as('commentsCntSubQuery');
   return db
     .select({
       user: {
@@ -24,9 +32,11 @@ export async function getPosts({ pageParam = 0, limit = 5 }) {
         content: post.content,
         createdAt: post.createdAt,
       },
+      commentsCount: commentsCntSubQuery.commentsCnt,
     })
     .from(post)
     .innerJoin(user, eq(post.userId, user.id))
+    .leftJoin(commentsCntSubQuery, eq(post.id, commentsCntSubQuery.postId))
     .where(eq(user.isPrivate, false))
     .orderBy(desc(post.createdAt))
     .limit(limit)
