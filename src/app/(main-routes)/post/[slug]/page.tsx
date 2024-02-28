@@ -21,7 +21,7 @@ export default async function PostDetails({
     );
   }
   return (
-    <main>
+    <main className="pt-5">
       <Post
         id={post[0].post.id}
         authorImage={post[0].user.image}
