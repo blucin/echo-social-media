@@ -1,6 +1,6 @@
 import db from "@/lib/db";
-import { post, user } from "@/drizzle/out/schema";
-import { desc, eq } from "drizzle-orm";
+import { post, user, follower } from "@/drizzle/out/schema";
+import { desc, eq, and } from "drizzle-orm";
 import { createId } from "@paralleldrive/cuid2";
 
 export async function createPost(input: { userId: string; content: string }) {
@@ -28,6 +28,36 @@ export async function getPosts({ pageParam = 0, limit = 5 }) {
     .from(post)
     .innerJoin(user, eq(post.userId, user.id))
     .where(eq(user.isPrivate, false))
+    .orderBy(desc(post.createdAt))
+    .limit(limit)
+    .offset(pageParam * limit);
+}
+
+export async function getFollowingPosts({
+  pageParam = 0,
+  limit = 5,
+  userId,
+}: {
+  pageParam: number;
+  limit: number | undefined;
+  userId: string;
+}) {
+  return db
+    .select({
+      user: {
+        name: user.name,
+        username: user.username,
+        image: user.image,
+      },
+      post: {
+        id: post.id,
+        content: post.content,
+        createdAt: post.createdAt,
+      },
+    })
+    .from(post)
+    .innerJoin(user, eq(post.userId, user.id))
+    .innerJoin(follower, and(eq(follower.followerId, userId), eq(follower.followeeId, post.userId)))
     .orderBy(desc(post.createdAt))
     .limit(limit)
     .offset(pageParam * limit);
