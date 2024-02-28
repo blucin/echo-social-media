@@ -12,6 +12,7 @@ type PostProps = {
   authorImage: string | null | undefined;
   className?: string;
   uploadedAt?: string;
+  commentsCnt?: number;
 };
 
 export default function Post({ ...props }: PostProps) {
@@ -60,7 +61,7 @@ export default function Post({ ...props }: PostProps) {
             >
               <ReplyIcon className="h-4 w-4" />
               <span className="sr-only">Comment</span>
-              <span className="text-xs"> 69 </span>
+              <span className="text-xs"> {props.commentsCnt ? props.commentsCnt : 0} </span>
             </Link>
           </Button>
 
