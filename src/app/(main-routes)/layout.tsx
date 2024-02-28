@@ -50,7 +50,7 @@ export default async function MainLayout({
           ]}
         />
         <div className="col-span-5 w-full border-x">
-          <TopBar />
+          <TopBar disableFollowButton={session===undefined} />
           <div className="pb-14">
             {children}
           </div>
