@@ -8,7 +8,22 @@ import LoadingPosts from "@/components/LoadingPosts";
 import { XCircleIcon } from "lucide-react";
 import { format } from "date-fns";
 
-const fetchPosts = async ({ pageParam = 0, limit = 2 }) => {
+const fetchFollowingPosts = async ({ pageParam = 0, limit = 2 }) => {
+  try {
+    const res = await fetch(
+      `/api/posts/fetch?page=${pageParam}&limit=${limit}&followingOnly=true`
+    );
+    if (!res.ok) {
+      throw new Error(await res.text());
+    }
+    const data: ResponseData = await res.json();
+    return data;
+  } catch (error) {
+    throw new Error("Some error occurred while fetching posts.");
+  }
+}
+
+const fetchPublicPosts = async ({ pageParam = 0, limit = 2 }) => {
   try {
     const res = await fetch(
       `/api/posts/fetch?page=${pageParam}&limit=${limit}`
@@ -25,16 +40,21 @@ const fetchPosts = async ({ pageParam = 0, limit = 2 }) => {
 
 type PostsProps = {
   postsPerLoad: number | undefined;
+  followingOnly?: boolean;
 };
 
-export default function Posts({ postsPerLoad = 5 }: PostsProps) {
+export default function Posts({ postsPerLoad = 5, followingOnly }: PostsProps) {
   // read: https://react-query.tanstack.com/guides/infinite-queries
   const { data, fetchNextPage, error, isError, isLoading, hasNextPage } =
     useInfiniteQuery({
-      queryKey: ["posts"],
+      queryKey: ["posts", followingOnly],
       initialPageParam: 0,
       queryFn: async ({ pageParam = 0 }) => {
-        return await fetchPosts({ pageParam, limit: postsPerLoad });
+        if (followingOnly) {
+          return await fetchFollowingPosts({ pageParam, limit: postsPerLoad });
+        } else {
+          return await fetchPublicPosts({ pageParam, limit: postsPerLoad });
+        }
       },
       getNextPageParam: (lastPage, allPages) => {
         if (lastPage.length < postsPerLoad) {
