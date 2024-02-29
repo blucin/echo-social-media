@@ -13,6 +13,7 @@ type PostProps = {
   className?: string;
   uploadedAt?: string;
   commentsCnt?: number;
+  likesCnt?: number;
 };
 
 export default function Post({ ...props }: PostProps) {
@@ -51,7 +52,7 @@ export default function Post({ ...props }: PostProps) {
           <Button className="flex gap-1 items-center" variant="ghost">
             <HeartIcon className="h-4 w-4" />
             <span className="sr-only">Like</span>
-            <span className="text-xs"> 0 </span>
+            <span className="text-xs"> {props.likesCnt ? props.likesCnt : 0} </span>
           </Button>
 
           <Button variant="ghost">
