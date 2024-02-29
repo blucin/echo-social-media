@@ -21,7 +21,7 @@ const fetchFollowingPosts = async ({ pageParam = 0, limit = 2 }) => {
   } catch (error) {
     throw new Error("Some error occurred while fetching posts.");
   }
-}
+};
 
 const fetchPublicPosts = async ({ pageParam = 0, limit = 2 }) => {
   try {
@@ -72,7 +72,7 @@ export default function Posts({ postsPerLoad = 5, followingOnly }: PostsProps) {
     return (
       <div className="flex gap-2 py-5 bg-destructive justify-center text-white dark:text-red-500">
         <XCircleIcon className="h-6 w-6" />
-        <span>Error: {error ? error.message: "No post contents found"}</span>
+        <span>Error: {error ? error.message : "No post contents found"}</span>
       </div>
     );
   }
@@ -92,7 +92,7 @@ export default function Posts({ postsPerLoad = 5, followingOnly }: PostsProps) {
       }
     >
       <div className="pt-4 pb-1 flex flex-col gap-3">
-        {posts.map(({ post, user, commentsCount }) => {
+        {posts.map(({ post, user, commentsCount, likesCount }) => {
           return (
             <Post
               key={post.id}
@@ -103,6 +103,7 @@ export default function Posts({ postsPerLoad = 5, followingOnly }: PostsProps) {
               authorImage={user.image}
               uploadedAt={format(new Date(post.createdAt), "MMM d, y")}
               commentsCnt={commentsCount}
+              likesCnt={likesCount}
             />
           );
         })}
