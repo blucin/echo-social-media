@@ -1,6 +1,6 @@
 import db from "@/lib/db";
-import { post, user, follower, comment } from "@/drizzle/out/schema";
-import { desc, eq, and, count, sql } from "drizzle-orm";
+import { post, user, follower, comment, like } from "@/drizzle/out/schema";
+import { desc, eq, and, sql } from "drizzle-orm";
 import { createId } from "@paralleldrive/cuid2";
 
 export async function createPost(input: { userId: string; content: string }) {
@@ -20,6 +20,14 @@ export async function getPosts({ pageParam = 0, limit = 5 }) {
     .from(comment)
     .groupBy(comment.postId)
     .as('commentsCntSubQuery');
+  const likesCntSubQuery = db.
+    select({
+      postId: like.postId,
+      likesCnt: sql<number>`count(*)`.as('likes_count'),
+    })
+    .from(like)
+    .groupBy(like.postId)
+    .as('likesCntSubQuery');
   return db
     .select({
       user: {
@@ -33,10 +41,12 @@ export async function getPosts({ pageParam = 0, limit = 5 }) {
         createdAt: post.createdAt,
       },
       commentsCount: commentsCntSubQuery.commentsCnt,
+      likesCount: likesCntSubQuery.likesCnt,
     })
     .from(post)
     .innerJoin(user, eq(post.userId, user.id))
     .leftJoin(commentsCntSubQuery, eq(post.id, commentsCntSubQuery.postId))
+    .leftJoin(likesCntSubQuery, eq(post.id, likesCntSubQuery.postId))
     .where(eq(user.isPrivate, false))
     .orderBy(desc(post.createdAt))
     .limit(limit)
