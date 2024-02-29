@@ -62,6 +62,22 @@ export async function getFollowingPosts({
   limit: number | undefined;
   userId: string;
 }) {
+  const commentsCntSubQuery = db
+    .select({
+      postId: comment.postId,
+      commentsCnt: sql<number>`count(*)`.as('comments_count'), 
+    })
+    .from(comment)
+    .groupBy(comment.postId)
+    .as('commentsCntSubQuery');
+  const likesCntSubQuery = db.
+    select({
+      postId: like.postId,
+      likesCnt: sql<number>`count(*)`.as('likes_count'),
+    })
+    .from(like)
+    .groupBy(like.postId)
+    .as('likesCntSubQuery');
   return db
     .select({
       user: {
@@ -74,10 +90,14 @@ export async function getFollowingPosts({
         content: post.content,
         createdAt: post.createdAt,
       },
+      commentsCount: commentsCntSubQuery.commentsCnt,
+      likesCount: likesCntSubQuery.likesCnt,
     })
     .from(post)
     .innerJoin(user, eq(post.userId, user.id))
     .innerJoin(follower, and(eq(follower.followerId, userId), eq(follower.followeeId, post.userId)))
+    .leftJoin(commentsCntSubQuery, eq(post.id, commentsCntSubQuery.postId))
+    .leftJoin(likesCntSubQuery, eq(post.id, likesCntSubQuery.postId))
     .orderBy(desc(post.createdAt))
     .limit(limit)
     .offset(pageParam * limit);
