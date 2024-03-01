@@ -12,6 +12,7 @@ declare module "next-auth" {
       username: string;
       bio: string;
       bannerImage: string;
+      isPrivate: boolean;
     } & DefaultSession["user"];
   }
 }
@@ -34,6 +35,7 @@ export const authConfig = {
         if (token.username) session.user.username = token.username;
         if (token.bio) session.user.bio = token.bio;
         if (token.bannerImage) session.user.bannerImage = token.bannerImage;
+        if (token.isPrivate) session.user.isPrivate = token.isPrivate;
       }
       return session;
     },
@@ -47,6 +49,7 @@ export const authConfig = {
       token.username = existingUser.username ?? "";
       token.bio = existingUser.bio ?? "";
       token.bannerImage = existingUser.bannerImage ?? "";
+      token.isPrivate = existingUser.isPrivate ?? false;
 
       return token;
     },
