@@ -17,7 +17,7 @@ export default async function FollowingPage() {
   }
   return (
     <main className="flex flex-col">
-      <PostForm userImage={session.user.image} />
+      <PostForm userImage={session.user.image} isPrivate={session.user.isPrivate} />
       <Posts postsPerLoad={5} followingOnly />
     </main>
   );

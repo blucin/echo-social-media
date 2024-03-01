@@ -4,20 +4,21 @@ import Image from "next/image";
 import { Textarea } from "@/components/ui/textarea";
 import { handleCreatePost } from "@/actions/post";
 import SubmitButton from "@/components/SubmitButton";
-import { Globe2Icon } from "lucide-react";
+import { Globe2Icon, GlobeLockIcon } from "lucide-react";
 import { Separator } from "./ui/separator";
 import { useFormState } from "react-dom";
 import { useRef, useEffect } from "react";
 
 type PostFormProps = {
   userImage: string | null | undefined;
+  isPrivate: boolean;
 };
 
 export default function PostForm({ ...props }: PostFormProps) {
   const [formState, formAction] = useFormState(handleCreatePost, {
     message: "idle",
     postContent: "",
-  })
+  });
   const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
@@ -50,8 +51,17 @@ export default function PostForm({ ...props }: PostFormProps) {
           <p className="text-red-500 text-sm pl-3 py-1">{formState.error}</p>
         )}
         <div className="flex items-center gap-2 text-gray-500 text-sm pl-3">
-          <Globe2Icon className="h-4 w-4" />
-          <span>Everyone can reply</span>
+          {props.isPrivate ? (
+            <>
+              <GlobeLockIcon className="h-4 w-4" />
+              <span>Only people following you can view</span>
+            </>
+          ) : (
+            <>
+              <Globe2Icon className="h-4 w-4" />
+              <span>Everyone can view</span>
+            </>
+          )}
         </div>
         <Separator className="my-2" />
         <SubmitButton

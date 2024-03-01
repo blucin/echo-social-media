@@ -8,7 +8,7 @@ export default async function Home() {
   return (
     <>
       {session ? (
-        <PostForm userImage={session.user.image} />
+        <PostForm userImage={session.user.image} isPrivate={session.user.isPrivate} />
       ) : (
         <main className="xl:hidden flex flex-col gap-3 px-5 py-10 border-b">
           <p className="text-center text-gray-400">Log in to post</p>
