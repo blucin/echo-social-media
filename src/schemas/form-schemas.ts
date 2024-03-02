@@ -104,3 +104,9 @@ export const PostFormSchema = z.object({
     .url({ message: "Post ImageURL is not a valid URL" })
     .optional(),
 });
+export type PostFormState = {
+  message: "success" | "error" | "idle";
+  postContent: string;
+  postImageUrl: string | undefined;
+  error?: string;
+};
