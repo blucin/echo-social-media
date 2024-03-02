@@ -35,19 +35,25 @@ export const notification = pgTable("notification", {
 	hasRead: boolean("hasRead").default(false).notNull(),
 });
 
+export const post = pgTable("post", {
+	id: text("id").primaryKey().notNull(),
+	content: text("content").notNull(),
+	userId: text("userId").notNull().references(() => user.id, { onDelete: "cascade" } ),
+	createdAt: timestamp("createdAt", { mode: 'string' }).defaultNow().notNull(),
+	updatedAt: timestamp("updatedAt", { mode: 'string' }).defaultNow(),
+	postImageUrl: text("postImageUrl"),
+},
+(table) => {
+	return {
+		postPostImageUrlUnique: unique("post_postImageUrl_unique").on(table.postImageUrl),
+	}
+});
+
 export const comment = pgTable("comment", {
 	id: text("id").primaryKey().notNull(),
 	content: text("content").notNull(),
 	userId: text("userId").notNull().references(() => user.id, { onDelete: "cascade" } ),
 	postId: text("postId").notNull().references(() => post.id, { onDelete: "cascade" } ),
-	createdAt: timestamp("createdAt", { mode: 'string' }).defaultNow().notNull(),
-	updatedAt: timestamp("updatedAt", { mode: 'string' }).defaultNow(),
-});
-
-export const post = pgTable("post", {
-	id: text("id").primaryKey().notNull(),
-	content: text("content").notNull(),
-	userId: text("userId").notNull().references(() => user.id, { onDelete: "cascade" } ),
 	createdAt: timestamp("createdAt", { mode: 'string' }).defaultNow().notNull(),
 	updatedAt: timestamp("updatedAt", { mode: 'string' }).defaultNow(),
 });
