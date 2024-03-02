@@ -28,6 +28,7 @@ export default async function PostDetails({
         authorName={post[0].user.name}
         authorUsername={post[0].user.username}
         content={post[0].post.content}
+        postImageUrl={post[0].post.imageUrl}
         uploadedAt={format(new Date(post[0].post.createdAt), "MMM d, y")}
       />
       <Comments postId={post[0].post.id} />

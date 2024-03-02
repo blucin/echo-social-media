@@ -98,6 +98,7 @@ export default function Posts({ postsPerLoad = 5, followingOnly }: PostsProps) {
               key={post.id}
               id={post.id}
               content={post.content}
+              postImageUrl={post.imageUrl}
               authorName={user.name ? user.name : ""}
               authorUsername={user.username ? user.username : "unknown"}
               authorImage={user.image}
