@@ -3,11 +3,20 @@ import { post, user, follower, comment, like } from "@/drizzle/out/schema";
 import { desc, eq, and, sql } from "drizzle-orm";
 import { createId } from "@paralleldrive/cuid2";
 
-export async function createPost(input: { userId: string; content: string }) {
+export async function createPost({
+  userId,
+  content,
+  imageUrl,
+}: {
+  userId: string;
+  content: string;
+  imageUrl?: string;
+}) {
   return db.insert(post).values({
     id: createId(),
-    userId: input.userId,
-    content: input.content,
+    userId: userId,
+    content: content,
+    postImageUrl: imageUrl,
   });
 }
 
@@ -15,19 +24,19 @@ export async function getPosts({ pageParam = 0, limit = 5 }) {
   const commentsCntSubQuery = db
     .select({
       postId: comment.postId,
-      commentsCnt: sql<number>`count(*)`.as('comments_count'), 
+      commentsCnt: sql<number>`count(*)`.as("comments_count"),
     })
     .from(comment)
     .groupBy(comment.postId)
-    .as('commentsCntSubQuery');
-  const likesCntSubQuery = db.
-    select({
+    .as("commentsCntSubQuery");
+  const likesCntSubQuery = db
+    .select({
       postId: like.postId,
-      likesCnt: sql<number>`count(*)`.as('likes_count'),
+      likesCnt: sql<number>`count(*)`.as("likes_count"),
     })
     .from(like)
     .groupBy(like.postId)
-    .as('likesCntSubQuery');
+    .as("likesCntSubQuery");
   return db
     .select({
       user: {
@@ -39,6 +48,7 @@ export async function getPosts({ pageParam = 0, limit = 5 }) {
         id: post.id,
         content: post.content,
         createdAt: post.createdAt,
+        imageUrl: post.postImageUrl,
       },
       commentsCount: commentsCntSubQuery.commentsCnt,
       likesCount: likesCntSubQuery.likesCnt,
@@ -65,19 +75,19 @@ export async function getFollowingPosts({
   const commentsCntSubQuery = db
     .select({
       postId: comment.postId,
-      commentsCnt: sql<number>`count(*)`.as('comments_count'), 
+      commentsCnt: sql<number>`count(*)`.as("comments_count"),
     })
     .from(comment)
     .groupBy(comment.postId)
-    .as('commentsCntSubQuery');
-  const likesCntSubQuery = db.
-    select({
+    .as("commentsCntSubQuery");
+  const likesCntSubQuery = db
+    .select({
       postId: like.postId,
-      likesCnt: sql<number>`count(*)`.as('likes_count'),
+      likesCnt: sql<number>`count(*)`.as("likes_count"),
     })
     .from(like)
     .groupBy(like.postId)
-    .as('likesCntSubQuery');
+    .as("likesCntSubQuery");
   return db
     .select({
       user: {
@@ -89,13 +99,17 @@ export async function getFollowingPosts({
         id: post.id,
         content: post.content,
         createdAt: post.createdAt,
+        imageUrl: post.postImageUrl,
       },
       commentsCount: commentsCntSubQuery.commentsCnt,
       likesCount: likesCntSubQuery.likesCnt,
     })
     .from(post)
     .innerJoin(user, eq(post.userId, user.id))
-    .innerJoin(follower, and(eq(follower.followerId, userId), eq(follower.followeeId, post.userId)))
+    .innerJoin(
+      follower,
+      and(eq(follower.followerId, userId), eq(follower.followeeId, post.userId))
+    )
     .leftJoin(commentsCntSubQuery, eq(post.id, commentsCntSubQuery.postId))
     .leftJoin(likesCntSubQuery, eq(post.id, likesCntSubQuery.postId))
     .orderBy(desc(post.createdAt))
@@ -115,6 +129,7 @@ export async function getPostById(id: string) {
       post: {
         id: post.id,
         content: post.content,
+        imageUrl: post.postImageUrl,
         createdAt: post.createdAt,
       },
     })
