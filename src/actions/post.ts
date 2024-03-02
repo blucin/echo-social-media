@@ -6,37 +6,26 @@ import { createPost, getPostById, deletePost } from "@/db/queries/posts";
 import { revalidatePath } from "next/cache";
 import { PostFormSchema as formSchema } from "@/schemas/form-schemas";
 
-type FormState = {
-  message: "success" | "error" | "idle";
-  postContent: string;
-  error?: string;
-};
-
 // sorry for 2 tabs of indentation whoevers reading this
 export async function handleCreatePost(
-  prevState: FormState,
-  formData: FormData
-): Promise<FormState> {
-  const postContent = formData.get("postContent");
+  data: z.infer<typeof formSchema>,
+) {
   const session = await auth();
   if (!session) {
     return {
       message: "error",
       error: "You must be logged in to post",
-      postContent: postContent as string,
     };
   }
   try {
-    const validated = formSchema.parse({
-      postContent,
-    });
+    const validated = formSchema.parse(data);
     await createPost({
       userId: session.user.id,
       content: validated.postContent,
+      imageUrl: validated.postImageUrl,
     });
     return {
       message: "success",
-      postContent: "",
     };
   } catch (error) {
     if (error instanceof z.ZodError) {
@@ -44,13 +33,11 @@ export async function handleCreatePost(
       return {
         message: "error",
         error: errorMap["postContent"]?.[0] ?? "An error occurred",
-        postContent: postContent as string,
       };
     } else {
       return {
         message: "error",
         error: "An error occurred",
-        postContent: postContent as string,
       };
     }
   }
