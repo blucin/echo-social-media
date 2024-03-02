@@ -3,10 +3,12 @@ import { Button } from "@/components/ui/button";
 import { HeartIcon, ReplyIcon, RepeatIcon } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { AspectRatio } from "./ui/aspect-ratio";
 
 type PostProps = {
   id: string;
   content: string;
+  postImageUrl?: string | null;
   authorName: string | null | undefined;
   authorUsername: string;
   authorImage: string | null | undefined;
@@ -48,6 +50,18 @@ export default function Post({ ...props }: PostProps) {
           ) : null}
         </Link>
         <p className="mt-2 text-pretty">{props.content}</p>
+        {props.postImageUrl ? (
+          <div className="mt-2 mr-2">
+            <AspectRatio ratio={16 / 9} className="bg-muted border-2">
+              <Image
+                src={props.postImageUrl}
+                alt="post image"
+                fill
+                className="rounded-lg h-auto w-auto"
+              />
+            </AspectRatio>
+          </div>
+        ) : null}
         <div className="flex-1 flex flex-col justify-between">
           <div>{/* ... placeholder ... */}</div>
           <Button variant="ghost" className="mt-2 ml-auto">
