@@ -51,13 +51,14 @@ export default function Post({ ...props }: PostProps) {
         </Link>
         <p className="mt-2 text-pretty">{props.content}</p>
         {props.postImageUrl ? (
-          <div className="mt-2 mr-2">
-            <AspectRatio ratio={16 / 9} className="bg-muted border-2">
+          <div className="pt-2 pr-2">
+            <AspectRatio ratio={16 / 9}>
               <Image
                 src={props.postImageUrl}
                 alt="post image"
                 fill
-                className="rounded-lg h-auto w-auto"
+                style={{ borderRadius: '10px' }}
+                className="h-auto w-auto overflow-hidden drop-shadow-xl"
               />
             </AspectRatio>
           </div>
