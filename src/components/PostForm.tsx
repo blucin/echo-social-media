@@ -71,7 +71,7 @@ export default function PostForm({ ...props }: PostFormProps) {
         }
         formRef.current?.reset();
         collapsibleTriggerRef.current?.click();
-        queryClient.invalidateQueries({ queryKey: ["posts"]})
+        queryClient.invalidateQueries({ queryKey: ["posts"] });
       } catch (error) {
         if (error instanceof z.ZodError) {
           const errorMap = error.flatten().fieldErrors;
@@ -153,18 +153,13 @@ export default function PostForm({ ...props }: PostFormProps) {
               )}
             </Button>
           </div>
-          <CollapsibleContent>
-            <AspectRatio
-              ratio={16 / 10}
-              className="flex items-center justify-center"
-            >
-              <SingleImageDropzone
-                value={postImagePreview}
-                onChange={(img) => {
-                  setPostImagePreview(img);
-                }}
-              />
-            </AspectRatio>
+          <CollapsibleContent className="p-2">
+            <SingleImageDropzone
+              value={postImagePreview}
+              onChange={(img) => {
+                setPostImagePreview(img);
+              }}
+            />
           </CollapsibleContent>
         </Collapsible>
       </div>
