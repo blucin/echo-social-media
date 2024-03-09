@@ -153,6 +153,7 @@ export async function getPostsByUserId(
       post: {
         id: post.id,
         content: post.content,
+        imageUrl: post.postImageUrl,
         createdAt: post.createdAt,
       },
     })

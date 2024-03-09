@@ -46,6 +46,7 @@ export default async function UserPosts({
               post.user.image ? post.user.image : "/default-profile-pic.png"
             }
             content={post.post.content}
+            postImageUrl={post.post.imageUrl}
             uploadedAt={format(new Date(post.post.createdAt), "MMM d, y")}
             className="flex-1"
           />
