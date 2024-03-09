@@ -20,6 +20,7 @@ import {
 import { useForm } from "react-hook-form";
 import { useRef, useState, useTransition } from "react";
 import { useEdgeStore } from "@/lib/edgestore";
+import { useQueryClient } from "@tanstack/react-query";
 import { SingleImageDropzone } from "./SingleImageDropzone";
 import { PostFormSchema } from "@/schemas/form-schemas";
 import { z } from "zod";
@@ -35,6 +36,7 @@ export default function PostForm({ ...props }: PostFormProps) {
   const [error, setError] = useState<string | undefined>();
   const [isPending, startTransition] = useTransition();
   const [postImagePreview, setPostImagePreview] = useState<File>();
+  const queryClient = useQueryClient();
 
   const form = useForm<z.infer<typeof PostFormSchema>>({
     resolver: zodResolver(PostFormSchema),
@@ -69,6 +71,7 @@ export default function PostForm({ ...props }: PostFormProps) {
         }
         formRef.current?.reset();
         collapsibleTriggerRef.current?.click();
+        queryClient.invalidateQueries({ queryKey: ["posts"]})
       } catch (error) {
         if (error instanceof z.ZodError) {
           const errorMap = error.flatten().fieldErrors;
