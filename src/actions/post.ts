@@ -5,11 +5,10 @@ import { auth } from "@/auth";
 import { createPost, getPostById, deletePost } from "@/db/queries/posts";
 import { revalidatePath } from "next/cache";
 import { PostFormSchema as formSchema } from "@/schemas/form-schemas";
+import { backendClient } from "@/lib/edgestore-server";
 
 // sorry for 2 tabs of indentation whoevers reading this
-export async function handleCreatePost(
-  data: z.infer<typeof formSchema>,
-) {
+export async function handleCreatePost(data: z.infer<typeof formSchema>) {
   const session = await auth();
   if (!session) {
     return {
@@ -54,6 +53,14 @@ export async function handleDeletePost(postId: string) {
       throw new Error("You can only delete your own posts");
     }
     await deletePost(postId);
+    if (toDelete[0].post.imageUrl) {
+      const res = await backendClient.publicImage.deleteFile({
+        url: toDelete[0].post.imageUrl,
+      });
+      if (!res.success) {
+        throw new Error("An error occurred while deleting the post");
+      }
+    }
     revalidatePath("/(main-routes)/user/[username]/", "page");
   } catch (error) {
     return {
