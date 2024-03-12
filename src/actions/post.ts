@@ -46,11 +46,11 @@ export async function handleDeletePost(postId: string) {
   try {
     const session = await auth();
     if (!session) {
-      throw new Error("You must be logged in to delete a post");
+      throw new Error("you must be logged in to delete a post");
     }
     const toDelete = await getPostById(postId);
     if (!toDelete || toDelete[0].user.id !== session.user.id) {
-      throw new Error("You can only delete your own posts");
+      throw new Error("you can only delete your own posts");
     }
     await deletePost(postId);
     if (toDelete[0].post.imageUrl) {
@@ -58,7 +58,7 @@ export async function handleDeletePost(postId: string) {
         url: toDelete[0].post.imageUrl,
       });
       if (!res.success) {
-        throw new Error("An error occurred while deleting the post");
+        throw new Error("an error occurred while deleting the post");
       }
     }
     revalidatePath("/(main-routes)/user/[username]/", "page");

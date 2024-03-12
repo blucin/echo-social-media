@@ -19,7 +19,7 @@ const fetchFollowingPosts = async ({ pageParam = 0, limit = 2 }) => {
     const data: ResponseData = await res.json();
     return data;
   } catch (error) {
-    throw new Error("Some error occurred while fetching posts.");
+    throw new Error("some error occurred while fetching posts.");
   }
 };
 
@@ -34,7 +34,7 @@ const fetchPublicPosts = async ({ pageParam = 0, limit = 2 }) => {
     const data: ResponseData = await res.json();
     return data;
   } catch (error) {
-    throw new Error("Some error occurred while fetching posts.");
+    throw new Error("some error occurred while fetching posts.");
   }
 };
 
