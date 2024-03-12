@@ -11,7 +11,6 @@ import {
   Loader2Icon,
 } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
-import { AspectRatio } from "@/components/ui/aspect-ratio";
 import {
   Collapsible,
   CollapsibleContent,
