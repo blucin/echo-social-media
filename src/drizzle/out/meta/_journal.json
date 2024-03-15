@@ -1,0 +1,20 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1705991035552,
+      "tag": "0000_overjoyed_mariko_yashida",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1706029460320,
+      "tag": "0001_blue_screwball",
+      "breakpoints": true
+    }
+  ]
+}
