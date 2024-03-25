@@ -37,19 +37,19 @@ export default function Post({ ...props }: PostProps) {
       <div className="flex-1">
         <Link
           href={`/user/${props.authorUsername}/`}
-          className="flex items-center gap-2 w-fit"
+          className="flex justify-center items-center w-fit"
         >
-          <span className="font-semibold hover:underline">
+          <span className="font-semibold mr-2 hover:underline">
             {props.authorName ? props.authorName : props.authorUsername}
           </span>
-          <span className="text-gray-500 hover:underline">
+          <span className="text-gray-500 text-xs hover:underline">
             @{props.authorUsername}
           </span>
           {props.uploadedAt !== undefined ? (
-            <span className="text-gray-500"> · {props.uploadedAt}</span>
+            <span className="text-gray-500 text-xs ml-1">· {props.uploadedAt}</span>
           ) : null}
         </Link>
-        <p className="mt-2 text-pretty">{props.content}</p>
+        <p className="text-pretty text-sm sm:text-base">{props.content}</p>
         {props.postImageUrl ? (
           <div className="pt-2 pr-2">
             <AspectRatio ratio={16 / 9}>

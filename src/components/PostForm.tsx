@@ -69,7 +69,9 @@ export default function PostForm({ ...props }: PostFormProps) {
           return;
         }
         formRef.current?.reset();
-        collapsibleTriggerRef.current?.click();
+        if (postImagePreview) {
+          collapsibleTriggerRef.current?.click();
+        }
         queryClient.invalidateQueries({ queryKey: ["posts"] });
       } catch (error) {
         if (error instanceof z.ZodError) {

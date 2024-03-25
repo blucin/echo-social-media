@@ -102,7 +102,7 @@ export default function Posts({ postsPerLoad = 5, followingOnly }: PostsProps) {
               authorName={user.name ? user.name : ""}
               authorUsername={user.username ? user.username : "unknown"}
               authorImage={user.image}
-              uploadedAt={format(new Date(post.createdAt), "MMM d, y")}
+              uploadedAt={format(new Date(post.createdAt), "MMM d")}
               commentsCnt={commentsCount}
               likesCnt={likesCount}
             />
