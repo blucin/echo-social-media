@@ -31,3 +31,14 @@ export async function getUserByUsername(username: string) {
     where: eq(user.username, username),
   });
 }
+
+export async function getNUsers(n: number) {
+  return db
+    .select({
+      username: user.username,
+      displayName: user.name,
+      profilePic: user.image,
+    })
+    .from(user)
+    .limit(n);
+}
