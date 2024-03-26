@@ -32,7 +32,7 @@ export default function Post({ ...props }: PostProps) {
         alt="avatar"
         width={40}
         height={40}
-        className="rounded-full"
+        className="rounded-full aspect-square"
       />
       <div className="flex-1">
         <Link
