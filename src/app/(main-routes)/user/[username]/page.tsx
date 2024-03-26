@@ -50,13 +50,13 @@ export default async function UserPage({
           ) : null}
         </AspectRatio>
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-4 relative top-[-20px] left-5 z-20">
+            <div className="flex items-center gap-4 relative top-[-20px] left-5 z-20">
             <Image
               src={user.image || "/default-profile.png"}
               alt="profile"
               width={100}
               height={100}
-              className="rounded-full"
+              className="rounded-full aspect-square"
             />
             <div>
               <div className="flex flex-col pt-3">
