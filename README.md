@@ -4,15 +4,6 @@ Echo is a social media application developed as part of a mini project for the 6
 
 ![Home Page](./assets/home_page.png)
 
-Other irrelevant details which are concerned with the project are mentioned below.
-
-```
-Subject:- Mini Project (102040601)
-Title:- Echo: Social Media Application
-Group No:- 20 
-Enrollment No:- 12102110501003
-Name:- Patel Akshar
-```
 ## Before you start
 
 1. Clone the repository
